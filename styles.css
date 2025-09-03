@@ -328,17 +328,26 @@ body {
   width: 8px;
 }
 
+/* Swapped: track is darker, thumb is lighter */
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(20, 20, 20, 0.8);
+  border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  border: 2px solid rgba(255, 255, 255, 0.12);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* Firefox (thumb first, then track) */
+html, body {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.4) rgba(20, 20, 20, 0.8);
 }
 
 /* Scroll spacer to ensure enough height for frame scrolling */

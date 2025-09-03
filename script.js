@@ -72,15 +72,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
         const targetScrollY = scrollProgress * scrollHeight;
         
-        window.scrollTo({
-          top: targetScrollY,
-          behavior: 'smooth'
-        });
+        // Smooth scroll using Lenis with distance-based duration (slower)
+        const currentY = window.scrollY || window.pageYOffset;
+        const distance = Math.abs(currentY - targetScrollY);
+        // Map distance to a slower duration range (2.0s to 4.0s)
+        const duration = Math.min(4.0, Math.max(2.0, distance / 1500));
+        const easeInOut = (t) => (t < 0.5) ? 2*t*t : 1 - Math.pow(-2*t + 2, 2) / 2;
+        if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+          window.lenis.scrollTo(targetScrollY, { duration, easing: easeInOut });
+        } else {
+          window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
+        }
         
-        currentFrame = targetFrame;
-        renderFrame(currentFrame);
-        setTimeout(() => updateContentVisibility(currentFrame), 300);
-        
+        // Visual feedback on active tab
         frameTabs.forEach(t => t.style.opacity = '0.7');
         tab.style.opacity = '1';
         tab.style.transform = 'scale(1.05)';
@@ -95,6 +99,9 @@ document.addEventListener("DOMContentLoaded", () => {
       smoothWheel: true,
       smoothTouch: false,
     });
+    
+    // Expose Lenis for navigation clicks
+    window.lenis = lenis;
     
     function raf(time) {
       lenis.raf(time);
@@ -251,17 +258,18 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateContentVisibility(frameIndex) {
     const frameBasedElements = document.querySelectorAll('[data-reveal-frame]');
     
-    console.log(`Current Frame: ${frameIndex}`);
+    let visibleSectionIndex = -1;
     
-    frameBasedElements.forEach((section) => {
+    frameBasedElements.forEach((section, idx) => {
       const revealFrame = parseInt(section.dataset.revealFrame);
       const frameDuration = parseInt(section.dataset.revealFrameDuration) || 131;
       const isVisible = frameIndex >= revealFrame && frameIndex < revealFrame + frameDuration;
       
-      console.log(`Section ${section.querySelector('h2').textContent}: Frame ${revealFrame}-${revealFrame + frameDuration}, Visible: ${isVisible}`);
+      if (isVisible) {
+        visibleSectionIndex = idx;
+      }
       
       if (isVisible && section.classList.contains('content-hidden')) {
-        console.log(`Making section visible: ${section.querySelector('h2').textContent}`);
         section.classList.remove('content-hidden');
         section.classList.add('content-visible');
         
@@ -271,9 +279,8 @@ document.addEventListener("DOMContentLoaded", () => {
         section.style.transform = 'translateY(0) scale(1)';
         
         gsap.fromTo(section, { opacity: 0, y: 50, scale: 0.9 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: "power2.out" });
+          { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "power2.out" });
       } else if (!isVisible && section.classList.contains('content-visible')) {
-        console.log(`Hiding section: ${section.querySelector('h2').textContent}`);
         section.classList.remove('content-visible');
         section.classList.add('content-hidden');
         
@@ -282,9 +289,34 @@ document.addEventListener("DOMContentLoaded", () => {
         section.style.visibility = 'hidden';
         section.style.transform = 'translateY(50px) scale(0.9)';
         
-        gsap.to(section, { opacity: 0, y: -30, scale: 0.95, duration: 0.3, ease: "power2.in" });
+        gsap.to(section, { opacity: 0, y: -30, scale: 0.95, duration: 0.5, ease: "power2.in" });
       }
     });
+    
+    // Update active tab to match visible section (or nearest frame)
+    const frameTabs = document.querySelectorAll('.frame-tab');
+    if (frameTabs.length) {
+      let activeIdx = visibleSectionIndex;
+      if (activeIdx === -1) {
+        // Fallback: choose tab based on frame thresholds from data-frame
+        const tabStarts = Array.from(frameTabs).map(t => parseInt(t.dataset.frame));
+        for (let i = 0; i < tabStarts.length; i++) {
+          const start = tabStarts[i];
+          const next = tabStarts[i + 1] ?? Number.POSITIVE_INFINITY;
+          if (frameIndex >= start && frameIndex < next) { activeIdx = i; break; }
+        }
+        if (activeIdx === -1) activeIdx = 0;
+      }
+      frameTabs.forEach((t, i) => {
+        if (i === activeIdx) {
+          t.classList.add('active');
+          t.style.opacity = '1';
+        } else {
+          t.classList.remove('active');
+          t.style.opacity = '0.7';
+        }
+      });
+    }
   }
   
   updateProgress(0, totalFrames);
@@ -313,57 +345,5 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error('Web Worker error:', error);
   });
 
-  // Test function to manually show/hide sections
-  window.testSection = function(sectionNumber) {
-    const sections = document.querySelectorAll('.content-section');
-    if (sectionNumber >= 1 && sectionNumber <= sections.length) {
-      const section = sections[sectionNumber - 1];
-      console.log(`Testing Section ${sectionNumber}: ${section.querySelector('h2').textContent}`);
-      
-      // Hide all sections first
-      sections.forEach(s => {
-        s.classList.remove('content-visible');
-        s.classList.add('content-hidden');
-        s.style.opacity = '0';
-        s.style.visibility = 'hidden';
-        s.style.transform = 'translateY(50px) scale(0.9)';
-      });
-      
-      // Show the selected section
-      section.classList.remove('content-hidden');
-      section.classList.add('content-visible');
-      section.style.opacity = '1';
-      section.style.visibility = 'visible';
-      section.style.transform = 'translateY(0) scale(1)';
-      
-      console.log(`Section ${sectionNumber} should now be visible`);
-    }
-  };
-  
-  // Test function to show all sections
-  window.showAllSections = function() {
-    const sections = document.querySelectorAll('.content-section');
-    sections.forEach(section => {
-      section.classList.remove('content-hidden');
-      section.classList.add('content-visible');
-      section.style.opacity = '1';
-      section.style.visibility = 'visible';
-      section.style.transform = 'translateY(0) scale(1)';
-    });
-    console.log('All sections are now visible');
-  };
-  
-  // Test function to hide all sections
-  window.hideAllSections = function() {
-    const sections = document.querySelectorAll('.content-section');
-    sections.forEach(section => {
-      section.classList.remove('content-visible');
-      section.classList.add('content-hidden');
-      section.style.opacity = '0';
-      section.style.visibility = 'hidden';
-      section.style.transform = 'translateY(50px) scale(0.9)';
-    });
-    console.log('All sections are now hidden');
-  };
-});
 
+});
