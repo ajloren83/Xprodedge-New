@@ -22,69 +22,80 @@
     </div>
 
     <div class="container">
+        <!-- Header with logo, progress and menu -->
+        <header class="site-header">
+            <div class="header-inner">
+                <div class="header-left">
+                    <div class="logo">Demo</div>
+                </div>
+                <div class="header-center">
+                    <div class="scroll-progress"><div class="scroll-progress-fill" id="scrollProgressFill"></div></div>
+                </div>
+                <div class="header-right">
+                    <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+                        <span class="menu-icon" id="menuIcon">▦</span>
+                        <span class="menu-text">Menu</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Menu overlay -->
+        <div class="menu-overlay" id="menuOverlay" aria-hidden="true"></div>
+
+        <!-- Centered menu modal panel -->
+        <aside class="menu-panel modal" id="menuPanel" aria-hidden="true">
+            <div class="menu-modal-header">
+                <div class="menu-label">Menu</div>
+                <button class="menu-close" id="menuClose" aria-label="Close menu">✕</button>
+            </div>
+            <nav class="menu-content">
+                <a href="#" class="menu-item">Home</a>
+                <a href="#" class="menu-item">Section 1</a>
+                <a href="#" class="menu-item">Section 2</a>
+                <a href="#" class="menu-item">Section 3</a>
+                <a href="#" class="menu-item">Section 4</a>
+                <a href="#" class="menu-item">Section 5</a>
+            </nav>
+            <div class="menu-footer">
+                <a href="#" class="menu-foot-link">Terms of Use</a>
+                <a href="#" class="menu-foot-link">Privacy Policy</a>
+            </div>
+        </aside>
+
         <!-- Canvas for frame rendering -->
         <canvas id="scrollCanvas"></canvas>
         
         <!-- Content overlay -->
         <div class="content-overlay">
             <!-- Section 1 -->
-            <section class="content-section content-hidden" data-reveal-frame="1" data-reveal-frame-duration="121">
-                <div class="glass">
-                    <h2>Section 1</h2>
-                    <div class="card-grid">
-                        <div class="card">Card 1</div>
-                        <div class="card">Card 2</div>
-                        <div class="card">Card 3</div>
-                    </div>
-                </div>
+            <section class="content-section content-hidden" data-reveal-frame="1" data-reveal-frame-duration="81">
+                <h2>Section 1</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             </section>
             
             <!-- Section 2 -->
-            <section class="content-section content-hidden" data-reveal-frame="131" data-reveal-frame-duration="121">
-                <div class="glass">
-                    <h2>Section 2</h2>
-                    <div class="card-grid">
-                        <div class="card">Card 1</div>
-                        <div class="card">Card 2</div>
-                        <div class="card">Card 3</div>
-                    </div>
-                </div>
+            <section class="content-section content-hidden" data-reveal-frame="176" data-reveal-frame-duration="175">
+                <h2>Section 2</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             </section>
             
             <!-- Section 3 -->
-            <section class="content-section content-hidden" data-reveal-frame="262" data-reveal-frame-duration="121">
-                <div class="glass">
-                    <h2>Section 3</h2>
-                    <div class="card-grid">
-                        <div class="card">Card 1</div>
-                        <div class="card">Card 2</div>
-                        <div class="card">Card 3</div>
-                    </div>
-                </div>
+            <section class="content-section content-hidden" data-reveal-frame="351" data-reveal-frame-duration="175">
+                <h2>Section 3</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             </section>
             
             <!-- Section 4 -->
-            <section class="content-section content-hidden" data-reveal-frame="393" data-reveal-frame-duration="121">
-                <div class="glass">
-                    <h2>Section 4</h2>
-                    <div class="card-grid">
-                        <div class="card">Card 1</div>
-                        <div class="card">Card 2</div>
-                        <div class="card">Card 3</div>
-                    </div>
-                </div>
+            <section class="content-section content-hidden" data-reveal-frame="526" data-reveal-frame-duration="175">
+                <h2>Section 4</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             </section>
             
             <!-- Section 5 -->
-            <section class="content-section content-hidden" data-reveal-frame="524" data-reveal-frame-duration="121">
-                <div class="glass">
+            <section class="content-section content-hidden" data-reveal-frame="701" data-reveal-frame-duration="175">
                     <h2>Section 5</h2>
-                    <div class="card-grid">
-                        <div class="card">Card 1</div>
-                        <div class="card">Card 2</div>
-                        <div class="card">Card 3</div>
-                    </div>
-                </div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             </section>
         </div>
     </div>
@@ -95,10 +106,10 @@
     <!-- Frame Navigation Tabs -->
     <div class="frame-navigation">
         <button class="frame-tab" data-frame="1">Section 1</button>
-        <button class="frame-tab" data-frame="131">Section 2</button>
-        <button class="frame-tab" data-frame="262">Section 3</button>
-        <button class="frame-tab" data-frame="393">Section 4</button>
-        <button class="frame-tab" data-frame="524">Section 5</button>
+        <button class="frame-tab" data-frame="176">Section 2</button>
+        <button class="frame-tab" data-frame="351">Section 3</button>
+        <button class="frame-tab" data-frame="526">Section 4</button>
+        <button class="frame-tab" data-frame="701">Section 5</button>
     </div>
 
     <!-- Scripts -->

@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   
   // CONFIGURATION
-  const totalFrames = 655;
-  const maxCacheSize = 655;
+  const totalFrames = 873;
+  const maxCacheSize = 873;
   const preloadBuffer = 30;
   let currentFrame = 1;
   
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let framesLoaded = 0;
   
   const framePaths = Array.from({ length: totalFrames }, (_, i) =>
-    `assets/xprodedge-video/frames/frame-${String(i + 1).padStart(4, "0")}.webp`
+    `assets/final-video/frames/frame-${String(i + 1).padStart(4, "0")}.webp`
   );
   
   const worker = new Worker("frameWorker.js");
@@ -92,6 +92,66 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
     
+    // Header: scroll progress
+    const progressFillEl = document.getElementById('scrollProgressFill');
+    function updateScrollProgress(progress01) {
+      if (progressFillEl) {
+        progressFillEl.style.width = Math.round(progress01 * 100) + '%';
+      }
+    }
+
+    // Header: menu toggle logic
+    const menuToggleBtn = document.getElementById('menuToggle');
+    const menuPanel = document.getElementById('menuPanel');
+    const menuIcon = document.getElementById('menuIcon');
+    let isMenuOpen = false;
+    const menuOverlay = document.getElementById('menuOverlay');
+    const menuCloseBtn = document.getElementById('menuClose');
+
+    function setMenuState(open) {
+      isMenuOpen = open;
+      if (!menuPanel || !menuToggleBtn || !menuIcon) return;
+
+      // Toggle classes
+      menuPanel.classList.toggle('open', open);
+      if (menuOverlay) menuOverlay.classList.toggle('open', open);
+
+      // Accessibility + icon
+      menuToggleBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      menuPanel.setAttribute('aria-hidden', open ? 'false' : 'true');
+      menuOverlay?.setAttribute?.('aria-hidden', open ? 'false' : 'true');
+      menuIcon.textContent = open ? '✕' : '▦';
+
+      // GSAP animations
+      if (window.gsap) {
+        const items = menuPanel.querySelectorAll('.menu-item');
+        if (open) {
+          gsap.fromTo(menuToggleBtn, { scale: 1 }, { scale: 1.15, duration: 0.2, ease: 'power2.out', yoyo: true, repeat: 1 });
+          gsap.fromTo(menuPanel, { y: 6, opacity: 0, scale: 0.96 }, { y: 0, opacity: 1, scale: 1, duration: 0.3, ease: 'power2.out' });
+          if (items && items.length) {
+            gsap.fromTo(items, { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: 'power2.out', stagger: 0.06, delay: 0.06 });
+          }
+        } else {
+          gsap.to(menuPanel, { y: 6, opacity: 0, scale: 0.98, duration: 0.22, ease: 'power2.in', onComplete: () => {
+            menuPanel.classList.remove('open');
+            if (menuOverlay) menuOverlay.classList.remove('open');
+          } });
+          if (items && items.length) {
+            gsap.to(items, { y: 8, opacity: 0, duration: 0.16, ease: 'power2.in' });
+          }
+        }
+      }
+    }
+    if (menuToggleBtn) {
+      menuToggleBtn.addEventListener('click', () => setMenuState(!isMenuOpen));
+    }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isMenuOpen) setMenuState(false);
+    });
+
+    if (menuCloseBtn) menuCloseBtn.addEventListener('click', () => setMenuState(false));
+    if (menuOverlay) menuOverlay.addEventListener('click', () => setMenuState(false));
+
     // Lenis smooth scroll
     const lenis = new Lenis({
       duration: 1.2,
@@ -102,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Expose Lenis for navigation clicks
     window.lenis = lenis;
-    
+
     function raf(time) {
       lenis.raf(time);
       requestAnimationFrame(raf);
@@ -121,6 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
         scrub: 0.5,
         onUpdate: (self) => {
           const scrollProgress = self.progress;
+          updateScrollProgress(scrollProgress);
           
           // Calculate frame based on scroll progress (0 to 1)
           let frameIndex = Math.round(scrollProgress * (totalFrames - 1)) + 1;
@@ -262,7 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     frameBasedElements.forEach((section, idx) => {
       const revealFrame = parseInt(section.dataset.revealFrame);
-      const frameDuration = parseInt(section.dataset.revealFrameDuration) || 131;
+      const frameDuration = parseInt(section.dataset.revealFrameDuration) || 175;
       const isVisible = frameIndex >= revealFrame && frameIndex < revealFrame + frameDuration;
       
       if (isVisible) {
