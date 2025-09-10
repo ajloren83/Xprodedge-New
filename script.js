@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const preloader = document.getElementById('preloader');
   const progressFill = document.getElementById('progressFill');
   const progressText = document.getElementById('progressText');
-  const loadingInfo = document.getElementById('loadingInfo');
   
   const canvas = document.getElementById("scrollCanvas");
   const context = canvas.getContext("2d");
@@ -37,12 +36,71 @@ document.addEventListener("DOMContentLoaded", () => {
   
   const worker = new Worker("frameWorker.js");
   
+  // Store previous percentage to detect changes
+  let previousPercentage = 0;
+  
+  // Hero image element
+  const heroImage = document.getElementById('heroImage');
+  
+  // Initialize hero image animations
+  function initHeroAnimations() {
+    if (heroImage) {
+      // Basic scale up and down loop animation
+      gsap.to(heroImage, {
+        scale: 1.1,
+        duration: 2,
+        ease: "power2.inOut",
+        yoyo: true,
+        repeat: -1
+      });
+      
+      // Mouse move parallax effect
+      document.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth) - 0.5;
+        const y = (e.clientY / window.innerHeight) - 0.5;
+        
+        gsap.to(heroImage, {
+          x: x * 20,
+          y: y * 20,
+          duration: 0.5,
+          ease: "power2.out"
+        });
+      });
+    }
+  }
+  
+  // Initialize animations when hero image loads
+  if (heroImage) {
+    heroImage.addEventListener('load', initHeroAnimations);
+    // If image is already loaded
+    if (heroImage.complete) {
+      initHeroAnimations();
+    }
+  }
+  
   // Update progress bar
   function updateProgress(loaded, total) {
     const percentage = Math.round((loaded / total) * 100);
     progressFill.style.width = percentage + '%';
-    progressText.textContent = percentage + '%';
-    loadingInfo.textContent = `Loaded ${loaded} of ${total} frames...`;
+    
+    // Only animate if percentage has changed
+    if (percentage !== previousPercentage) {
+      const percentageStr = percentage.toString();
+      const previousStr = previousPercentage.toString();
+      
+      // Pad with leading zeros for comparison
+      const maxLength = Math.max(percentageStr.length, previousStr.length);
+      const currentPadded = percentageStr.padStart(maxLength, '0');
+      const previousPadded = previousStr.padStart(maxLength, '0');
+      
+      // Create HTML with rotation only for changed digits
+      progressText.innerHTML = currentPadded.split('').map((digit, index) => {
+        const isChanged = digit !== previousPadded[index];
+        return `<span class="${isChanged ? 'rotate-digit' : ''}" style="--i: ${index}">${digit}</span>`;
+      }).join('');
+      
+      previousPercentage = percentage;
+    }
   }
   
   // Hide preloader and show main content
@@ -359,17 +417,41 @@ document.addEventListener("DOMContentLoaded", () => {
             section.style.transform = 'translateY(0) scale(1)';
             section.style.filter = 'blur(0px)';
             
-            gsap.fromTo(section, { 
-              opacity: 0, 
-              scale: 0.3, 
-              filter: 'blur(20px)',
-              transformOrigin: 'center center'
-            }, { 
-              opacity: 1, 
-              scale: 1, 
-              filter: 'blur(0px)',
-              duration: 0.3
-            });
+            // Check if this is the agile office section for staggered animation
+            if (section.classList.contains('agile-office-section')) {
+              // Animate individual elements with stagger
+              const logo = section.querySelector('.agile-office-logo');
+              const heading = section.querySelector('.agile-office-heading');
+              const description = section.querySelector('.agile-office-description');
+              const button = section.querySelector('.explore-button');
+              
+              // No need to set transform origin since we're not using scale animation
+              
+              // Animate with stagger using fromTo
+              gsap.fromTo([logo, heading, description, button], {
+                opacity: 0,
+                y: 30
+              }, {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.2,
+                ease: "power2.out"
+              });
+            } else {
+              // Regular animation for other sections
+              gsap.fromTo(section, { 
+                opacity: 0, 
+                scale: 0.3, 
+                filter: 'blur(20px)',
+                transformOrigin: 'center center'
+              }, { 
+                opacity: 1, 
+                scale: 1, 
+                filter: 'blur(0px)',
+                duration: 0.3
+              });
+            }
           }
         } else if (section.classList.contains('content-visible')) {
           // Section is already visible, ensure it stays in the correct state
@@ -403,19 +485,41 @@ document.addEventListener("DOMContentLoaded", () => {
               }
             });
           } else {
-            // Scale to 0 + blur out effect for content sections
-            gsap.to(section, { 
-              scale: 0, 
-              filter: 'blur(15px)',
-              transformOrigin: 'center center',
-              duration: 0.3, 
-              onComplete: () => {
-                section.style.opacity = '0';
-                section.style.visibility = 'hidden';
-                section.style.transform = 'scale(0)';
-                section.style.filter = 'blur(15px)';
-              }
-            });
+            // Check if this is the agile office section for staggered hide animation
+            if (section.classList.contains('agile-office-section')) {
+              // Animate individual elements out with reverse stagger
+              const logo = section.querySelector('.agile-office-logo');
+              const heading = section.querySelector('.agile-office-heading');
+              const description = section.querySelector('.agile-office-description');
+              const button = section.querySelector('.explore-button');
+              
+              // Animate out with reverse stagger (reverse order)
+              gsap.to([button, description, heading, logo], {
+                opacity: 0,
+                y: -20,
+                duration: 0.4,
+                stagger: 0.15,
+                ease: "power2.in",
+                onComplete: () => {
+                  section.style.opacity = '0';
+                  section.style.visibility = 'hidden';
+                }
+              });
+            } else {
+              // Scale to 0 + blur out effect for other content sections
+              gsap.to(section, { 
+                scale: 0, 
+                filter: 'blur(15px)',
+                transformOrigin: 'center center',
+                duration: 0.3, 
+                onComplete: () => {
+                  section.style.opacity = '0';
+                  section.style.visibility = 'hidden';
+                  section.style.transform = 'scale(0)';
+                  section.style.filter = 'blur(15px)';
+                }
+              });
+            }
           }
         } else if (section.classList.contains('content-hidden')) {
           // Section is already hidden, ensure it stays in the correct state
