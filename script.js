@@ -12,6 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error('Canvas element not found!');
     return;
   }
+
+  // Noise setup
+  const noiseBG = document.getElementById('noiseBG');
+  if (noiseBG) {
+    staticAnimate(noiseBG);
+  }
   
   // CONFIGURATION
   const totalFrames = 1075;
@@ -89,34 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderFrame(currentFrame);
     updateContentVisibility(currentFrame);
     
-    // Frame navigation
-    const frameTabs = document.querySelectorAll('.frame-tab');
-    frameTabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const targetFrame = parseInt(tab.dataset.frame);
-        const scrollProgress = (targetFrame - 1) / (totalFrames - 1);
-        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const targetScrollY = scrollProgress * scrollHeight;
-        
-        // Smooth scroll using Lenis with distance-based duration (slower)
-        const currentY = window.scrollY || window.pageYOffset;
-        const distance = Math.abs(currentY - targetScrollY);
-        // Map distance to a slower duration range (2.0s to 4.0s)
-        const duration = Math.min(4.0, Math.max(2.0, distance / 1500));
-        const easeInOut = (t) => (t < 0.5) ? 2*t*t : 1 - Math.pow(-2*t + 2, 2) / 2;
-        if (window.lenis && typeof window.lenis.scrollTo === 'function') {
-          window.lenis.scrollTo(targetScrollY, { duration, easing: easeInOut });
-        } else {
-          window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
-        }
-        
-        // Visual feedback on active tab
-        frameTabs.forEach(t => t.style.opacity = '0.7');
-        tab.style.opacity = '1';
-        tab.style.transform = 'scale(1.05)';
-        setTimeout(() => tab.style.transform = 'scale(1)', 200);
-      });
-    });
     
     // Header: scroll progress
     const progressFillEl = document.getElementById('scrollProgressFill');
@@ -197,6 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // GSAP ScrollTrigger with proper frame calculation
     gsap.registerPlugin(ScrollTrigger);
+    
     
     // Create a timeline that directly controls frame progression
     const mainTimeline = gsap.timeline({
@@ -345,67 +324,127 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateContentVisibility(frameIndex) {
     const frameBasedElements = document.querySelectorAll('[data-reveal-frame]');
     
-    let visibleSectionIndex = -1;
-    
-    frameBasedElements.forEach((section, idx) => {
+    frameBasedElements.forEach((section) => {
       const revealFrame = parseInt(section.dataset.revealFrame);
-      const frameDuration = parseInt(section.dataset.revealFrameDuration) || 173;
+      const frameDuration = parseInt(section.dataset.revealFrameDuration) || 50;
       const isVisible = frameIndex >= revealFrame && frameIndex < revealFrame + frameDuration;
       
-      if (isVisible) {
-        visibleSectionIndex = idx;
-      }
+      // Check if this is the first frame of visibility (for animation trigger)
+      const isFirstFrameOfVisibility = frameIndex === revealFrame;
       
-      if (isVisible && section.classList.contains('content-hidden')) {
-        section.classList.remove('content-hidden');
-        section.classList.add('content-visible');
-        
-        // Force immediate visibility
-        section.style.opacity = '1';
-        section.style.visibility = 'visible';
-        section.style.transform = 'translateY(0) scale(1)';
-        
-        gsap.fromTo(section, { opacity: 0, y: 50, scale: 0.9 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "power2.out" });
-      } else if (!isVisible && section.classList.contains('content-visible')) {
-        section.classList.remove('content-visible');
-        section.classList.add('content-hidden');
-        
-        // Force immediate hiding
-        section.style.opacity = '0';
-        section.style.visibility = 'hidden';
-        section.style.transform = 'translateY(50px) scale(0.9)';
-        
-        gsap.to(section, { opacity: 0, y: -30, scale: 0.95, duration: 0.5, ease: "power2.in" });
+      if (isVisible) {
+        // Show section if not already visible OR if it's the first frame of visibility
+        if (section.classList.contains('content-hidden') || isFirstFrameOfVisibility) {
+          section.classList.remove('content-hidden');
+          section.classList.add('content-visible');
+          
+          // Check if this is the background overlay (no scale animation)
+          if (section.classList.contains('agile-office-overlay')) {
+            // Simple fade in for background overlay
+            section.style.opacity = '0';
+            section.style.visibility = 'visible';
+            section.style.transform = 'none';
+            section.style.filter = 'none';
+            
+            gsap.to(section, { 
+              opacity: 1,
+              duration: 0.8,
+              delay: 1.5,
+              ease: "power2.out"
+            });
+          } else {
+            // Scale in + blur in effect for content sections
+            section.style.opacity = '1';
+            section.style.visibility = 'visible';
+            section.style.transform = 'translateY(0) scale(1)';
+            section.style.filter = 'blur(0px)';
+            
+            gsap.fromTo(section, { 
+              opacity: 0, 
+              scale: 0.3, 
+              filter: 'blur(20px)',
+              transformOrigin: 'center center'
+            }, { 
+              opacity: 1, 
+              scale: 1, 
+              filter: 'blur(0px)',
+              duration: 0.3
+            });
+          }
+        } else if (section.classList.contains('content-visible')) {
+          // Section is already visible, ensure it stays in the correct state
+          if (section.classList.contains('agile-office-overlay')) {
+            section.style.opacity = '1';
+            section.style.visibility = 'visible';
+            section.style.transform = 'none';
+            section.style.filter = 'none';
+          } else {
+            section.style.opacity = '1';
+            section.style.visibility = 'visible';
+            section.style.transform = 'scale(1)';
+            section.style.filter = 'blur(0px)';
+          }
+        }
+      } else {
+        // Hide section if currently visible
+        if (section.classList.contains('content-visible')) {
+          section.classList.remove('content-visible');
+          section.classList.add('content-hidden');
+          
+          if (section.classList.contains('agile-office-overlay')) {
+            // Simple fade out for background overlay
+            gsap.to(section, { 
+              opacity: 0,
+              duration: 0.3,
+              ease: "power2.in",
+              onComplete: () => {
+                section.style.opacity = '0';
+                section.style.visibility = 'hidden';
+              }
+            });
+          } else {
+            // Scale to 0 + blur out effect for content sections
+            gsap.to(section, { 
+              scale: 0, 
+              filter: 'blur(15px)',
+              transformOrigin: 'center center',
+              duration: 0.3, 
+              onComplete: () => {
+                section.style.opacity = '0';
+                section.style.visibility = 'hidden';
+                section.style.transform = 'scale(0)';
+                section.style.filter = 'blur(15px)';
+              }
+            });
+          }
+        } else if (section.classList.contains('content-hidden')) {
+          // Section is already hidden, ensure it stays in the correct state
+          if (section.classList.contains('agile-office-overlay')) {
+            section.style.opacity = '0';
+            section.style.visibility = 'hidden';
+            section.style.transform = 'none';
+            section.style.filter = 'none';
+          } else {
+            section.style.opacity = '0';
+            section.style.visibility = 'hidden';
+            section.style.transform = 'scale(0.3)';
+            section.style.filter = 'blur(20px)';
+          }
+        }
       }
     });
-    
-    // Update active tab to match visible section (or nearest frame)
-    const frameTabs = document.querySelectorAll('.frame-tab');
-    if (frameTabs.length) {
-      let activeIdx = visibleSectionIndex;
-      if (activeIdx === -1) {
-        // Fallback: choose tab based on frame thresholds from data-frame
-        const tabStarts = Array.from(frameTabs).map(t => parseInt(t.dataset.frame));
-        for (let i = 0; i < tabStarts.length; i++) {
-          const start = tabStarts[i];
-          const next = tabStarts[i + 1] ?? Number.POSITIVE_INFINITY;
-          if (frameIndex >= start && frameIndex < next) { activeIdx = i; break; }
-        }
-        if (activeIdx === -1) activeIdx = 0;
-      }
-      frameTabs.forEach((t, i) => {
-        if (i === activeIdx) {
-          t.classList.add('active');
-          t.style.opacity = '1';
-        } else {
-          t.classList.remove('active');
-          t.style.opacity = '0.7';
-        }
-      });
-    }
   }
   
+  // Static noise animation function
+  function staticAnimate(object) {
+    TweenMax.to(object, 0.03, {
+      backgroundPosition: Math.floor(Math.random() * 100) + 1 + "% " + Math.floor(Math.random() * 10) + 1 + "%", 
+      onComplete: staticAnimate,
+      onCompleteParams: [object],
+      ease: SteppedEase.config(1)
+    });
+  }
+
   updateProgress(0, totalFrames);
   
   const batchSize = 50;

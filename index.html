@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Xprodedge - Scroll Trigger Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Michroma:wght@400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -51,11 +54,10 @@
             </div>
             <nav class="menu-content">
                 <a href="#" class="menu-item">Home</a>
-                <a href="#" class="menu-item">Section 1</a>
-                <a href="#" class="menu-item">Section 2</a>
-                <a href="#" class="menu-item">Section 3</a>
-                <a href="#" class="menu-item">Section 4</a>
-                <a href="#" class="menu-item">Section 5</a>
+                <a href="#" class="menu-item">About</a>
+                <a href="#" class="menu-item">Services</a>
+                <a href="#" class="menu-item">Portfolio</a>
+                <a href="#" class="menu-item">Contact</a>
             </nav>
             <div class="menu-footer">
                 <a href="#" class="menu-foot-link">Terms of Use</a>
@@ -66,55 +68,49 @@
         <!-- Canvas for frame rendering -->
         <canvas id="scrollCanvas"></canvas>
         
-        <!-- Content overlay -->
-        <div class="content-overlay">
-            <!-- Section 1 -->
-            <section class="content-section content-hidden" data-reveal-frame="1" data-reveal-frame-duration="173">
-                <h2>Section 1</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </section>
-            
-            <!-- Section 2 -->
-            <section class="content-section content-hidden" data-reveal-frame="174" data-reveal-frame-duration="173">
-                <h2>Section 2</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </section>
-            
-            <!-- Section 3 -->
-            <section class="content-section content-hidden" data-reveal-frame="347" data-reveal-frame-duration="173">
-                <h2>Section 3</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </section>
-            
-            <!-- Section 4 -->
-            <section class="content-section content-hidden" data-reveal-frame="520" data-reveal-frame-duration="173">
-                <h2>Section 4</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </section>
-            
-            <!-- Section 5 -->
-            <section class="content-section content-hidden" data-reveal-frame="693" data-reveal-frame-duration="173">
-                    <h2>Section 5</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </section>
-        </div>
+        <!-- Noise overlay for continuous animation -->
+        <div class="noiseBG" id="noiseBG"></div>
+        
+        <!-- Hero Section -->
+        <section class="hero-section content-hidden" data-reveal-frame="25" data-reveal-frame-duration="50">
+            <div class="hero-content">
+                <h1 class="hero-heading">
+                    products on the <span class="edge-text">edge</span>
+                </h1>
+                <!-- Corner elements -->
+                <div class="corner corner-tl"></div>
+                <div class="corner corner-tr"></div>
+                <div class="corner corner-bl"></div>
+                <div class="corner corner-br"></div>
+            </div>
+        </section>
+
+        <!-- Background Overlay for Agile Office -->
+        <div class="agile-office-overlay content-hidden" data-reveal-frame="185" data-reveal-frame-duration="100"></div>
+
+        <!-- Agile Office Section -->
+        <section class="agile-office-section content-hidden" data-reveal-frame="185" data-reveal-frame-duration="100">
+            <div class="agile-office-content">
+                <img src="assets/agile-office.svg" alt="Agile Office Logo" class="agile-office-logo">
+                <h2 class="agile-office-heading">'Swift and Simple' workflow process automation</h2>
+                <p class="agile-office-description">
+                    Our agileoffice is a cloud web-based online SaaS application which makes your customized workflow process easier
+                </p>
+                <button class="explore-button">
+                    <span class="button-text">Explore</span>
+                    <img src="assets/arrow.svg" alt="Arrow" class="button-arrow">
+                </button>
+            </div>
+        </section>
     </div>
     
     <!-- Scroll spacer to ensure enough height for frame scrolling -->
     <div class="scroll-spacer"></div>
-    
-    <!-- Frame Navigation Tabs -->
-    <div class="frame-navigation">
-        <button class="frame-tab" data-frame="1">Section 1</button>
-        <button class="frame-tab" data-frame="174">Section 2</button>
-        <button class="frame-tab" data-frame="347">Section 3</button>
-        <button class="frame-tab" data-frame="520">Section 4</button>
-        <button class="frame-tab" data-frame="693">Section 5</button>
-    </div>
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.27/bundled/lenis.min.js"></script>
     <script src="frameWorker.js"></script>
     <script src="script.js"></script>

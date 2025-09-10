@@ -6,13 +6,13 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   color: #333;
-    overflow-x: hidden;
+  overflow-x: hidden;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
-  }
+}
   
 /* Preloader Overlay */
 .preloader-overlay {
@@ -43,6 +43,7 @@ body {
 }
 
 .preloader-content h2 {
+  font-family: 'Michroma', monospace;
   font-size: 2.5rem;
   margin-bottom: 2rem;
   background: linear-gradient(45deg, #667eea, #764ba2);
@@ -118,6 +119,195 @@ body {
   display: block;
 }
 
+/* Noise overlay for continuous animation */
+.noiseBG {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  background-image: url(assets/noise.png);
+  opacity: 0.1;
+}
+
+/* Hero Section */
+.hero-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.hero-content {
+  text-align: center;
+  z-index: 11;
+  position: relative;
+  padding: 40px 60px;
+  border: none;
+}
+
+/* Corner elements */
+.corner {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid white;
+  pointer-events: none;
+}
+
+.corner-tl {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+}
+
+.corner-tr {
+  top: 0;
+  right: 0;
+  border-left: none;
+  border-bottom: none;
+}
+
+.corner-bl {
+  bottom: 0;
+  left: 0;
+  border-right: none;
+  border-top: none;
+}
+
+.corner-br {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+}
+
+/* Background Overlay for Agile Office */
+.agile-office-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(251deg, rgba(0, 0, 0, 0.00) 52.23%, rgba(0, 0, 0, 0.56) 91.82%);
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+}
+
+
+/* Agile Office Section */
+.agile-office-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: end;
+  justify-content: flex-start;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.agile-office-content {
+  text-align: left;
+  z-index: 11;
+  position: relative;
+  max-width: 600px;
+  padding: 5rem;
+}
+
+.agile-office-logo {
+  height: 2.375rem; /* 38px */
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.agile-office-heading {
+  font-family: 'Michroma', monospace;
+  font-size: 1.75rem; /* 28px */
+  font-weight: 400;
+  color: white;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.2;
+}
+
+.agile-office-body {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem; /* 18px */
+  font-weight: 400;
+  color: white;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+}
+
+.agile-office-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem; /* 18px */
+  font-weight: 300;
+  color: rgba(255, 255, 255, 1);
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+}
+
+.explore-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem; /* 6px */
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  font-family: 'Michroma', monospace;
+  font-size: 0.875rem; /* 14px */
+  font-weight: 400;
+  padding: 0;
+  margin: 0;
+  outline: none;
+}
+
+.explore-button:hover {
+  color: #1DBFBF;
+}
+
+.button-arrow {
+  width: auto;
+  height: 1.875rem; /* 30px */
+  transition: transform 0.3s ease;
+}
+
+.explore-button:hover .button-arrow {
+  transform: translateX(4px);
+}
+
+.hero-heading {
+  font-family: 'Michroma', monospace;
+  font-size: 4rem; /* 64px */
+  font-weight: 400;
+  color: white;
+  margin: 0;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.edge-text {
+  color: #1DBFBF;
+}
+
+
+
 /* Content overlay */
 .content-overlay {
   position: relative;
@@ -150,6 +340,7 @@ body {
 
 
 .content-section h2 {
+  font-family: 'Michroma', monospace;
   font-size: 2.5rem;
   margin-bottom: 1rem;
   color: white;
@@ -192,48 +383,14 @@ body {
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
 
-/* Frame Navigation Tabs */
-.frame-navigation {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 10px;
-  z-index: 1000;
-}
-
-.frame-tab {
-  padding: 12px 20px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 25px;
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 14px;
-  font-weight: 500;
-  opacity: 0.7;
-}
-
-.frame-tab:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-}
-
-.frame-tab.active {
-  background: rgba(255, 255, 255, 0.25);
-  opacity: 1;
-  transform: scale(1.05);
-}
 
 /* Frame-based content visibility states */
 .content-hidden {
   opacity: 0;
   visibility: hidden;
-  transform: translateY(50px) scale(0.9);
+  transform: scale(0.3);
+  filter: blur(20px);
+  transform-origin: center center;
   transition: all 0.5s ease;
   pointer-events: none;
 }
@@ -241,7 +398,9 @@ body {
 .content-visible {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0) scale(1);
+  transform: scale(1);
+  filter: blur(0px);
+  transform-origin: center center;
   transition: all 0.5s ease;
   pointer-events: auto;
 }
@@ -275,6 +434,28 @@ body {
     font-size: 2rem;
   }
   
+  .hero-heading {
+    font-size: 3rem; /* 48px on mobile */
+  }
+  
+  .agile-office-heading {
+    font-size: 1.5rem; /* 24px on mobile */
+  }
+  
+  .agile-office-body,
+  .agile-office-description {
+    font-size: 1rem; /* 16px on mobile */
+  }
+  
+  .explore-button {
+    font-size: 0.75rem; /* 12px on mobile */
+  }
+  
+  .corner {
+    width: 25px;
+    height: 25px;
+  }
+  
   .content-section h2 {
     font-size: 2rem;
   }
@@ -288,20 +469,33 @@ body {
     padding: 1.5rem;
   }
 
-  .frame-navigation {
-    bottom: 10px;
-    gap: 8px;
-  }
-  
-  .frame-tab {
-    padding: 10px 16px;
-    font-size: 12px;
-  }
 }
 
 @media (max-width: 480px) {
   .preloader-content h2 {
     font-size: 1.8rem;
+  }
+  
+  .hero-heading {
+    font-size: 2.5rem; /* 40px on small mobile */
+  }
+  
+  .agile-office-heading {
+    font-size: 1.25rem; /* 20px on small mobile */
+  }
+  
+  .agile-office-body,
+  .agile-office-description {
+    font-size: 0.875rem; /* 14px on small mobile */
+  }
+  
+  .explore-button {
+    font-size: 0.6875rem; /* 11px on small mobile */
+  }
+  
+  .corner {
+    width: 20px;
+    height: 20px;
   }
   
   .content-section h2 {
@@ -317,17 +511,6 @@ body {
     padding: 1.5rem;
   }
 
-  .frame-navigation {
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-  }
-  
-  .frame-tab {
-    padding: 8px 14px;
-    font-size: 0.75rem;
-    min-width: 90px;
-  }
 }
 
 /* Custom scrollbar */
@@ -446,7 +629,15 @@ html, body {
 .menu-panel.open { transform: translateX(0) scale(1); opacity: 1; }
 
 .menu-content { display: flex; flex-direction: column; gap: 16px; padding: 96px 24px 24px; }
-.menu-item { color: #111; text-decoration: none; font-weight: 600; font-size: 18px; opacity: 0; transform: translateY(8px); }
+.menu-item { 
+  color: #111; 
+  text-decoration: none; 
+  font-family: 'Inter', sans-serif;
+  font-weight: 600; 
+  font-size: 18px; 
+  opacity: 0; 
+  transform: translateY(8px); 
+}
 .menu-item:hover { text-decoration: underline; }
 
 /* Ensure content not overlapped initially */
@@ -488,7 +679,15 @@ html, body {
 .menu-close { background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.08); border-radius: 8px; width: 40px; height: 40px; cursor: pointer; }
 
 .menu-content { padding: 24px 32px; display: flex; flex-direction: column; gap: 16px; }
-.menu-item { font-size: 28px; font-weight: 700; color: #111; text-decoration: none; opacity: 0; transform: translateY(12px); }
+.menu-item { 
+  font-family: 'Inter', sans-serif;
+  font-size: 28px; 
+  font-weight: 700; 
+  color: #111; 
+  text-decoration: none; 
+  opacity: 0; 
+  transform: translateY(12px); 
+}
 .menu-item:hover { text-decoration: underline; }
 
 .menu-footer { margin-top: auto; padding: 0 24px 24px; display: flex; flex-direction: column; gap: 12px; }
