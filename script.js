@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   
   // CONFIGURATION
-  const totalFrames = 864;
-  const maxCacheSize = 864;
+  const totalFrames = 1075;
+  const maxCacheSize = 1075;
   const preloadBuffer = 30;
   let currentFrame = 1;
   
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let framesLoaded = 0;
   
   const framePaths = Array.from({ length: totalFrames }, (_, i) =>
-    `assets/xprodedge-video/frames/frame-${String(i + 1).padStart(4, "0")}.webp`
+    `assets/frames/frame-${String(i + 1).padStart(4, "0")}.webp`
   );
   
   const worker = new Worker("frameWorker.js");
@@ -44,7 +44,33 @@ document.addEventListener("DOMContentLoaded", () => {
     preloader.classList.add('hidden');
     setTimeout(() => {
       initializeMainSystem();
+      // Auto-scroll 25 frames after loading
+      autoScrollFrames(25);
     }, 500);
+  }
+  
+  // Auto-scroll function to scroll a specific number of frames
+  function autoScrollFrames(frameCount) {
+    const currentScrollY = window.scrollY || window.pageYOffset;
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const frameHeight = scrollHeight / (totalFrames - 1);
+    const targetScrollY = currentScrollY + (frameCount * frameHeight);
+    
+    // Ensure we don't scroll beyond the maximum scroll height
+    const maxScrollY = Math.min(targetScrollY, scrollHeight);
+    
+    // Use Lenis smooth scroll if available, otherwise use native smooth scroll
+    if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+      window.lenis.scrollTo(maxScrollY, { 
+        duration: 2.0, 
+        easing: (t) => t * (2 - t) // ease-out
+      });
+    } else {
+      window.scrollTo({ 
+        top: maxScrollY, 
+        behavior: 'smooth' 
+      });
+    }
   }
   
   // Initialize main system after all frames are loaded
