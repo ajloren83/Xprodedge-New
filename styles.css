@@ -250,6 +250,7 @@ body {
   position: relative;
   max-width: 600px;
   padding: 5rem;
+  pointer-events: auto;
 }
 
 .agile-office-logo {
@@ -447,6 +448,688 @@ body {
   transform: none !important;
 }
 
+/* Ixer Section Styles */
+.ixer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(118deg, rgba(0, 0, 0, 0.00) 58.89%, rgba(0, 0, 0, 0.56) 100.17%);
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.ixer-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.ixer-content {
+  text-align: left;
+  z-index: 11;
+  position: relative;
+  max-width: 600px;
+  padding: 5rem;
+  pointer-events: auto;
+}
+
+.ixer-logo {
+  height: 2.375rem;
+  margin-bottom: 1.5rem;
+  transform-origin: 0% 100%;
+}
+
+.ixer-heading {
+  font-family: 'Michroma', monospace;
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  transform-origin: 0% 100%;
+}
+
+.ixer-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 300;
+  color: #ffffff;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  transform-origin: 0% 100%;
+}
+
+/* Override scaling for ixer section */
+.ixer-section.content-hidden,
+.ixer-section.content-visible {
+  transform: none !important;
+}
+
+/* Override scaling for ixer elements */
+.ixer-section .ixer-logo,
+.ixer-section .ixer-heading,
+.ixer-section .ixer-description,
+.ixer-section .explore-button {
+  transform: none !important;
+}
+
+/* Edgerp Section Styles */
+.edgerp-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(251deg, rgba(0, 0, 0, 0.00) 52.23%, rgba(0, 0, 0, 0.56) 91.82%);
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.edgerp-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: end;
+  justify-content: flex-start;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.edgerp-content {
+  text-align: left;
+  z-index: 11;
+  position: relative;
+  max-width: 600px;
+  padding: 5rem;
+  pointer-events: auto;
+}
+
+.edgerp-logo {
+  height: 2.375rem; /* 38px */
+  margin-bottom: 1.5rem;
+  display: block;
+  transform-origin: 0% 100%;
+}
+
+.edgerp-heading {
+  font-family: 'Michroma', monospace;
+  font-size: 1.75rem; /* 28px */
+  font-weight: 400;
+  color: white;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.2;
+  transform-origin: 0% 100%;
+}
+
+.edgerp-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem; /* 18px */
+  font-weight: 300;
+  color: white;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+  transform-origin: 0% 100%;
+}
+
+/* Override scaling for edgerp section */
+.edgerp-section.content-hidden,
+.edgerp-section.content-visible {
+  transform: none !important;
+}
+
+/* Override scaling for edgerp elements */
+.edgerp-section .edgerp-logo,
+.edgerp-section .edgerp-heading,
+.edgerp-section .edgerp-description,
+.edgerp-section .explore-button {
+  transform: none !important;
+}
+
+/* Ixer 2 Section Styles */
+.ixer2-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(118deg, rgba(0, 0, 0, 0.00) 58.89%, rgba(0, 0, 0, 0.56) 100.17%);
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.ixer2-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.ixer2-content {
+  text-align: left;
+  z-index: 11;
+  position: relative;
+  max-width: 600px;
+  padding: 5rem;
+  pointer-events: auto;
+}
+
+.ixer2-logo {
+  height: 2.375rem;
+  margin-bottom: 1.5rem;
+  transform-origin: 0% 100%;
+}
+
+.ixer2-heading {
+  font-family: 'Michroma', monospace;
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  transform-origin: 0% 100%;
+}
+
+.ixer2-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 300;
+  color: #ffffff;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  transform-origin: 0% 100%;
+}
+
+/* Override scaling for ixer2 section */
+.ixer2-section.content-hidden,
+.ixer2-section.content-visible {
+  transform: none !important;
+}
+
+/* Override scaling for ixer2 elements */
+.ixer2-section .ixer2-logo,
+.ixer2-section .ixer2-heading,
+.ixer2-section .ixer2-description,
+.ixer2-section .explore-button {
+  transform: none !important;
+}
+
+/* Invoicedge Section Styles */
+.invoicedge-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(251deg, rgba(0, 0, 0, 0.00) 52.23%, rgba(0, 0, 0, 0.56) 91.82%);
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.invoicedge-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: end;
+  justify-content: flex-start;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.invoicedge-content {
+  text-align: left;
+  z-index: 11;
+  position: relative;
+  max-width: 600px;
+  padding: 5rem;
+  pointer-events: auto;
+}
+
+.invoicedge-logo {
+  height: 2.375rem; /* 38px */
+  margin-bottom: 1.5rem;
+  display: block;
+  transform-origin: 0% 100%;
+}
+
+.invoicedge-heading {
+  font-family: 'Michroma', monospace;
+  font-size: 1.75rem; /* 28px */
+  font-weight: 400;
+  color: white;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.2;
+  transform-origin: 0% 100%;
+}
+
+.invoicedge-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem; /* 18px */
+  font-weight: 300;
+  color: white;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+  transform-origin: 0% 100%;
+}
+
+/* Override scaling for invoicedge section */
+.invoicedge-section.content-hidden,
+.invoicedge-section.content-visible {
+  transform: none !important;
+}
+
+/* Override scaling for invoicedge elements */
+.invoicedge-section .invoicedge-logo,
+.invoicedge-section .invoicedge-heading,
+.invoicedge-section .invoicedge-description,
+.invoicedge-section .explore-button {
+  transform: none !important;
+}
+
+/* Telto Section Styles */
+.telto-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(251deg, rgba(0, 0, 0, 0.00) 52.23%, rgba(0, 0, 0, 0.56) 91.82%);
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.telto-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: end;
+  justify-content: flex-start;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.telto-content {
+  text-align: left;
+  z-index: 11;
+  position: relative;
+  max-width: 600px;
+  padding: 5rem;
+  pointer-events: auto;
+}
+
+.telto-logo {
+  height: 2.375rem; /* 38px */
+  margin-bottom: 1.5rem;
+  display: block;
+  transform-origin: 0% 100%;
+}
+
+.telto-heading {
+  font-family: 'Michroma', monospace;
+  font-size: 1.75rem; /* 28px */
+  font-weight: 400;
+  color: white;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.2;
+  transform-origin: 0% 100%;
+}
+
+.telto-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem; /* 18px */
+  font-weight: 300;
+  color: white;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+  transform-origin: 0% 100%;
+}
+
+/* Override scaling for telto section */
+.telto-section.content-hidden,
+.telto-section.content-visible {
+  transform: none !important;
+}
+
+/* Override scaling for telto elements */
+.telto-section .telto-logo,
+.telto-section .telto-heading,
+.telto-section .telto-description,
+.telto-section .explore-button {
+  transform: none !important;
+}
+
+/* Demo Section Styles */
+.demo-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(251deg, rgba(0, 0, 0, 0.00) 52.23%, rgba(0, 0, 0, 0.56) 91.82%);
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.demo-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: end;
+  justify-content: flex-start;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.demo-content {
+  text-align: left;
+  z-index: 11;
+  position: relative;
+  max-width: 600px;
+  padding: 5rem;
+  pointer-events: auto;
+}
+
+.demo-logo {
+  height: 2.375rem; /* 38px */
+  margin-bottom: 1.5rem;
+  display: block;
+  transform-origin: 0% 100%;
+}
+
+.demo-heading {
+  font-family: 'Michroma', monospace;
+  font-size: 1.75rem; /* 28px */
+  font-weight: 400;
+  color: white;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.2;
+  transform-origin: 0% 100%;
+}
+
+.demo-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem; /* 18px */
+  font-weight: 300;
+  color: white;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+  transform-origin: 0% 100%;
+}
+
+/* Override scaling for demo section */
+.demo-section.content-hidden,
+.demo-section.content-visible {
+  transform: none !important;
+}
+
+/* Override scaling for demo elements */
+.demo-section .demo-logo,
+.demo-section .demo-heading,
+.demo-section .demo-description,
+.demo-section .explore-button {
+  transform: none !important;
+}
+
+/* Demo 2 Section Styles */
+.demo2-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(251deg, rgba(0, 0, 0, 0.00) 52.23%, rgba(0, 0, 0, 0.56) 91.82%);
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.demo2-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: end;
+  justify-content: flex-start;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.demo2-content {
+  text-align: left;
+  z-index: 11;
+  position: relative;
+  max-width: 600px;
+  padding: 5rem;
+  pointer-events: auto;
+}
+
+.demo2-logo {
+  height: 2.375rem; /* 38px */
+  margin-bottom: 1.5rem;
+  display: block;
+  transform-origin: 0% 100%;
+}
+
+.demo2-heading {
+  font-family: 'Michroma', monospace;
+  font-size: 1.75rem; /* 28px */
+  font-weight: 400;
+  color: white;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.2;
+  transform-origin: 0% 100%;
+}
+
+.demo2-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem; /* 18px */
+  font-weight: 300;
+  color: white;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+  transform-origin: 0% 100%;
+}
+
+/* Override scaling for demo2 section */
+.demo2-section.content-hidden,
+.demo2-section.content-visible {
+  transform: none !important;
+}
+
+/* Override scaling for demo2 elements */
+.demo2-section .demo2-logo,
+.demo2-section .demo2-heading,
+.demo2-section .demo2-description,
+.demo2-section .explore-button {
+  transform: none !important;
+}
+
+/* Demo 3 Section Styles */
+.demo3-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(251deg, rgba(0, 0, 0, 0.00) 52.23%, rgba(0, 0, 0, 0.56) 91.82%);
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.demo3-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: end;
+  justify-content: flex-start;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.demo3-content {
+  text-align: left;
+  z-index: 11;
+  position: relative;
+  max-width: 600px;
+  padding: 5rem;
+  pointer-events: auto;
+}
+
+.demo3-logo {
+  height: 2.375rem; /* 38px */
+  margin-bottom: 1.5rem;
+  display: block;
+  transform-origin: 0% 100%;
+}
+
+.demo3-heading {
+  font-family: 'Michroma', monospace;
+  font-size: 1.75rem; /* 28px */
+  font-weight: 400;
+  color: white;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.2;
+  transform-origin: 0% 100%;
+}
+
+.demo3-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem; /* 18px */
+  font-weight: 300;
+  color: white;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+  transform-origin: 0% 100%;
+}
+
+/* Override scaling for demo3 section */
+.demo3-section.content-hidden,
+.demo3-section.content-visible {
+  transform: none !important;
+}
+
+/* Override scaling for demo3 elements */
+.demo3-section .demo3-logo,
+.demo3-section .demo3-heading,
+.demo3-section .demo3-description,
+.demo3-section .explore-button {
+  transform: none !important;
+}
+
+/* Demo 4 Section Styles */
+.demo4-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(251deg, rgba(0, 0, 0, 0.00) 52.23%, rgba(0, 0, 0, 0.56) 91.82%);
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.demo4-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: end;
+  justify-content: flex-start;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.demo4-content {
+  text-align: left;
+  z-index: 11;
+  position: relative;
+  max-width: 600px;
+  padding: 5rem;
+  pointer-events: auto;
+}
+
+.demo4-logo {
+  height: 2.375rem; /* 38px */
+  margin-bottom: 1.5rem;
+  display: block;
+  transform-origin: 0% 100%;
+}
+
+.demo4-heading {
+  font-family: 'Michroma', monospace;
+  font-size: 1.75rem; /* 28px */
+  font-weight: 400;
+  color: white;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.2;
+  transform-origin: 0% 100%;
+}
+
+.demo4-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem; /* 18px */
+  font-weight: 300;
+  color: white;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+  transform-origin: 0% 100%;
+}
+
+/* Override scaling for demo4 section */
+.demo4-section.content-hidden,
+.demo4-section.content-visible {
+  transform: none !important;
+}
+
+/* Override scaling for demo4 elements */
+.demo4-section .demo4-logo,
+.demo4-section .demo4-heading,
+.demo4-section .demo4-description,
+.demo4-section .explore-button {
+  transform: none !important;
+}
+
 /* Enhanced animations for frame-based reveals */
 @keyframes frameReveal {
   0% {
@@ -494,6 +1177,114 @@ body {
   }
   
   .agile-office-content {
+    padding: 2rem; /* 2rem on mobile instead of 5rem */
+  }
+  
+  .ixer-heading {
+    font-size: 1.5rem; /* 24px on mobile */
+  }
+  
+  .ixer-description {
+    font-size: 1rem; /* 16px on mobile */
+  }
+  
+  .ixer-content {
+    padding: 2rem; /* 2rem on mobile instead of 5rem */
+  }
+  
+  .edgerp-heading {
+    font-size: 1.5rem; /* 24px on mobile */
+  }
+  
+  .edgerp-description {
+    font-size: 1rem; /* 16px on mobile */
+  }
+  
+  .edgerp-content {
+    padding: 2rem; /* 2rem on mobile instead of 5rem */
+  }
+  
+  .ixer2-heading {
+    font-size: 1.5rem; /* 24px on mobile */
+  }
+  
+  .ixer2-description {
+    font-size: 1rem; /* 16px on mobile */
+  }
+  
+  .ixer2-content {
+    padding: 2rem; /* 2rem on mobile instead of 5rem */
+  }
+  
+  .invoicedge-heading {
+    font-size: 1.5rem; /* 24px on mobile */
+  }
+  
+  .invoicedge-description {
+    font-size: 1rem; /* 16px on mobile */
+  }
+  
+  .invoicedge-content {
+    padding: 2rem; /* 2rem on mobile instead of 5rem */
+  }
+  
+  .telto-heading {
+    font-size: 1.5rem; /* 24px on mobile */
+  }
+  
+  .telto-description {
+    font-size: 1rem; /* 16px on mobile */
+  }
+  
+  .telto-content {
+    padding: 2rem; /* 2rem on mobile instead of 5rem */
+  }
+  
+  .demo-heading {
+    font-size: 1.5rem; /* 24px on mobile */
+  }
+  
+  .demo-description {
+    font-size: 1rem; /* 16px on mobile */
+  }
+  
+  .demo-content {
+    padding: 2rem; /* 2rem on mobile instead of 5rem */
+  }
+  
+  .demo2-heading {
+    font-size: 1.5rem; /* 24px on mobile */
+  }
+  
+  .demo2-description {
+    font-size: 1rem; /* 16px on mobile */
+  }
+  
+  .demo2-content {
+    padding: 2rem; /* 2rem on mobile instead of 5rem */
+  }
+  
+  .demo3-heading {
+    font-size: 1.5rem; /* 24px on mobile */
+  }
+  
+  .demo3-description {
+    font-size: 1rem; /* 16px on mobile */
+  }
+  
+  .demo3-content {
+    padding: 2rem; /* 2rem on mobile instead of 5rem */
+  }
+  
+  .demo4-heading {
+    font-size: 1.5rem; /* 24px on mobile */
+  }
+  
+  .demo4-description {
+    font-size: 1rem; /* 16px on mobile */
+  }
+  
+  .demo4-content {
     padding: 2rem; /* 2rem on mobile instead of 5rem */
   }
   

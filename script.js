@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (heroImage) {
       // Basic scale up and down loop animation
       gsap.to(heroImage, {
-        scale: 1.1,
+        scale: 1.25,
         duration: 2,
         ease: "power2.inOut",
         yoyo: true,
@@ -107,6 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function hidePreloader() {
     preloader.classList.add('hidden');
     setTimeout(() => {
+      // Reset scroll position to top
+      window.scrollTo(0, 0);
       initializeMainSystem();
       // Auto-scroll 25 frames after loading
       autoScrollFrames(25);
@@ -147,9 +149,8 @@ document.addEventListener("DOMContentLoaded", () => {
       scrollSpacer.style.height = `${totalScrollHeight}px`;
     }
     
-    // Determine actual frame based on current scroll position
-    const scrollProgress = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-    currentFrame = Math.floor(scrollProgress * (totalFrames - 1)) + 1;
+    // Always start at frame 1, regardless of scroll position
+    currentFrame = 1;
     renderFrame(currentFrame);
     updateContentVisibility(currentFrame);
     
@@ -393,11 +394,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (isVisible) {
         // Show section if not already visible OR if it's the first frame of visibility
         if (section.classList.contains('content-hidden') || isFirstFrameOfVisibility) {
-          section.classList.remove('content-hidden');
-          section.classList.add('content-visible');
-          
+        section.classList.remove('content-hidden');
+        section.classList.add('content-visible');
+        
           // Check if this is the background overlay (no scale animation)
-          if (section.classList.contains('agile-office-overlay')) {
+          if (section.classList.contains('agile-office-overlay') || section.classList.contains('ixer-overlay') || section.classList.contains('edgerp-overlay') || section.classList.contains('ixer2-overlay') || section.classList.contains('invoicedge-overlay') || section.classList.contains('telto-overlay') || section.classList.contains('demo-overlay') || section.classList.contains('demo2-overlay') || section.classList.contains('demo3-overlay') || section.classList.contains('demo4-overlay')) {
             // Simple fade in for background overlay
             section.style.opacity = '0';
             section.style.visibility = 'visible';
@@ -412,9 +413,9 @@ document.addEventListener("DOMContentLoaded", () => {
             });
           } else {
             // Scale in + blur in effect for content sections
-            section.style.opacity = '1';
-            section.style.visibility = 'visible';
-            section.style.transform = 'translateY(0) scale(1)';
+        section.style.opacity = '1';
+        section.style.visibility = 'visible';
+        section.style.transform = 'translateY(0) scale(1)';
             section.style.filter = 'blur(0px)';
             
             // Check if this is the agile office section for staggered animation
@@ -426,6 +427,168 @@ document.addEventListener("DOMContentLoaded", () => {
               const button = section.querySelector('.explore-button');
               
               // No need to set transform origin since we're not using scale animation
+              
+              // Animate with stagger using fromTo
+              gsap.fromTo([logo, heading, description, button], {
+                opacity: 0,
+                y: 30
+              }, {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.2,
+                ease: "power2.out"
+              });
+            } else if (section.classList.contains('ixer-section')) {
+              // Animate individual elements with stagger for Ixer section
+              const logo = section.querySelector('.ixer-logo');
+              const heading = section.querySelector('.ixer-heading');
+              const description = section.querySelector('.ixer-description');
+              const button = section.querySelector('.explore-button');
+              
+              // Animate with stagger using fromTo
+              gsap.fromTo([logo, heading, description, button], {
+                opacity: 0,
+                y: 30
+              }, {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.2,
+                ease: "power2.out"
+              });
+            } else if (section.classList.contains('edgerp-section')) {
+              // Animate individual elements with stagger for Edgerp section
+              const logo = section.querySelector('.edgerp-logo');
+              const heading = section.querySelector('.edgerp-heading');
+              const description = section.querySelector('.edgerp-description');
+              const button = section.querySelector('.explore-button');
+              
+              // Animate with stagger using fromTo
+              gsap.fromTo([logo, heading, description, button], {
+                opacity: 0,
+                y: 30
+              }, {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.2,
+                ease: "power2.out"
+              });
+            } else if (section.classList.contains('ixer2-section')) {
+              // Animate individual elements with stagger for Ixer 2 section
+              const logo = section.querySelector('.ixer2-logo');
+              const heading = section.querySelector('.ixer2-heading');
+              const description = section.querySelector('.ixer2-description');
+              const button = section.querySelector('.explore-button');
+              
+              // Animate with stagger using fromTo
+              gsap.fromTo([logo, heading, description, button], {
+                opacity: 0,
+                y: 30
+              }, {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.2,
+                ease: "power2.out"
+              });
+            } else if (section.classList.contains('invoicedge-section')) {
+              // Animate individual elements with stagger for Invoicedge section
+              const logo = section.querySelector('.invoicedge-logo');
+              const heading = section.querySelector('.invoicedge-heading');
+              const description = section.querySelector('.invoicedge-description');
+              const button = section.querySelector('.explore-button');
+              
+              // Animate with stagger using fromTo
+              gsap.fromTo([logo, heading, description, button], {
+                opacity: 0,
+                y: 30
+              }, {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.2,
+                ease: "power2.out"
+              });
+            } else if (section.classList.contains('telto-section')) {
+              // Animate individual elements with stagger for Telto section
+              const logo = section.querySelector('.telto-logo');
+              const heading = section.querySelector('.telto-heading');
+              const description = section.querySelector('.telto-description');
+              const button = section.querySelector('.explore-button');
+              
+              // Animate with stagger using fromTo
+              gsap.fromTo([logo, heading, description, button], {
+                opacity: 0,
+                y: 30
+              }, {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.2,
+                ease: "power2.out"
+              });
+            } else if (section.classList.contains('demo-section')) {
+              // Animate individual elements with stagger for Demo section
+              const logo = section.querySelector('.demo-logo');
+              const heading = section.querySelector('.demo-heading');
+              const description = section.querySelector('.demo-description');
+              const button = section.querySelector('.explore-button');
+              
+              // Animate with stagger using fromTo
+              gsap.fromTo([logo, heading, description, button], {
+                opacity: 0,
+                y: 30
+              }, {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.2,
+                ease: "power2.out"
+              });
+            } else if (section.classList.contains('demo2-section')) {
+              // Animate individual elements with stagger for Demo 2 section
+              const logo = section.querySelector('.demo2-logo');
+              const heading = section.querySelector('.demo2-heading');
+              const description = section.querySelector('.demo2-description');
+              const button = section.querySelector('.explore-button');
+              
+              // Animate with stagger using fromTo
+              gsap.fromTo([logo, heading, description, button], {
+                opacity: 0,
+                y: 30
+              }, {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.2,
+                ease: "power2.out"
+              });
+            } else if (section.classList.contains('demo3-section')) {
+              // Animate individual elements with stagger for Demo 3 section
+              const logo = section.querySelector('.demo3-logo');
+              const heading = section.querySelector('.demo3-heading');
+              const description = section.querySelector('.demo3-description');
+              const button = section.querySelector('.explore-button');
+              
+              // Animate with stagger using fromTo
+              gsap.fromTo([logo, heading, description, button], {
+                opacity: 0,
+                y: 30
+              }, {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.2,
+                ease: "power2.out"
+              });
+            } else if (section.classList.contains('demo4-section')) {
+              // Animate individual elements with stagger for Demo 4 section
+              const logo = section.querySelector('.demo4-logo');
+              const heading = section.querySelector('.demo4-heading');
+              const description = section.querySelector('.demo4-description');
+              const button = section.querySelector('.explore-button');
               
               // Animate with stagger using fromTo
               gsap.fromTo([logo, heading, description, button], {
@@ -455,7 +618,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         } else if (section.classList.contains('content-visible')) {
           // Section is already visible, ensure it stays in the correct state
-          if (section.classList.contains('agile-office-overlay')) {
+          if (section.classList.contains('agile-office-overlay') || section.classList.contains('ixer-overlay') || section.classList.contains('edgerp-overlay') || section.classList.contains('ixer2-overlay') || section.classList.contains('invoicedge-overlay') || section.classList.contains('telto-overlay') || section.classList.contains('demo-overlay') || section.classList.contains('demo2-overlay') || section.classList.contains('demo3-overlay') || section.classList.contains('demo4-overlay')) {
             section.style.opacity = '1';
             section.style.visibility = 'visible';
             section.style.transform = 'none';
@@ -470,10 +633,10 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         // Hide section if currently visible
         if (section.classList.contains('content-visible')) {
-          section.classList.remove('content-visible');
-          section.classList.add('content-hidden');
-          
-          if (section.classList.contains('agile-office-overlay')) {
+        section.classList.remove('content-visible');
+        section.classList.add('content-hidden');
+        
+          if (section.classList.contains('agile-office-overlay') || section.classList.contains('ixer-overlay') || section.classList.contains('edgerp-overlay') || section.classList.contains('ixer2-overlay') || section.classList.contains('invoicedge-overlay') || section.classList.contains('telto-overlay') || section.classList.contains('demo-overlay') || section.classList.contains('demo2-overlay') || section.classList.contains('demo3-overlay') || section.classList.contains('demo4-overlay')) {
             // Simple fade out for background overlay
             gsap.to(section, { 
               opacity: 0,
@@ -505,7 +668,178 @@ document.addEventListener("DOMContentLoaded", () => {
                   section.style.visibility = 'hidden';
                 }
               });
-            } else {
+            } else if (section.classList.contains('ixer-section')) {
+              // Animate individual elements out with reverse stagger for Ixer section
+              const logo = section.querySelector('.ixer-logo');
+              const heading = section.querySelector('.ixer-heading');
+              const description = section.querySelector('.ixer-description');
+              const button = section.querySelector('.explore-button');
+              
+              // Animate out with reverse stagger (reverse order)
+              gsap.to([button, description, heading, logo], {
+                opacity: 0,
+                y: -20,
+                duration: 0.4,
+                stagger: 0.15,
+                ease: "power2.in",
+                onComplete: () => {
+                  section.style.opacity = '0';
+                  section.style.visibility = 'hidden';
+                }
+              });
+            } else if (section.classList.contains('edgerp-section')) {
+              // Animate individual elements out with reverse stagger for Edgerp section
+              const logo = section.querySelector('.edgerp-logo');
+              const heading = section.querySelector('.edgerp-heading');
+              const description = section.querySelector('.edgerp-description');
+              const button = section.querySelector('.explore-button');
+              
+              // Animate out with reverse stagger (reverse order)
+              gsap.to([button, description, heading, logo], {
+                opacity: 0,
+                y: -20,
+                duration: 0.4,
+                stagger: 0.15,
+                ease: "power2.in",
+                onComplete: () => {
+                  section.style.opacity = '0';
+                  section.style.visibility = 'hidden';
+                }
+              });
+            } else if (section.classList.contains('ixer2-section')) {
+              // Animate individual elements out with reverse stagger for Ixer 2 section
+              const logo = section.querySelector('.ixer2-logo');
+              const heading = section.querySelector('.ixer2-heading');
+              const description = section.querySelector('.ixer2-description');
+              const button = section.querySelector('.explore-button');
+              
+              // Animate out with reverse stagger (reverse order)
+              gsap.to([button, description, heading, logo], {
+                opacity: 0,
+                y: -20,
+                duration: 0.4,
+                stagger: 0.15,
+                ease: "power2.in",
+                onComplete: () => {
+                  section.style.opacity = '0';
+                  section.style.visibility = 'hidden';
+                }
+              });
+            } else if (section.classList.contains('invoicedge-section')) {
+              // Animate individual elements out with reverse stagger for Invoicedge section
+              const logo = section.querySelector('.invoicedge-logo');
+              const heading = section.querySelector('.invoicedge-heading');
+              const description = section.querySelector('.invoicedge-description');
+              const button = section.querySelector('.explore-button');
+              
+              // Animate out with reverse stagger (reverse order)
+              gsap.to([button, description, heading, logo], {
+                opacity: 0,
+                y: -20,
+                duration: 0.4,
+                stagger: 0.15,
+                ease: "power2.in",
+                onComplete: () => {
+                  section.style.opacity = '0';
+                  section.style.visibility = 'hidden';
+                }
+              });
+            } else if (section.classList.contains('telto-section')) {
+              // Animate individual elements out with reverse stagger for Telto section
+              const logo = section.querySelector('.telto-logo');
+              const heading = section.querySelector('.telto-heading');
+              const description = section.querySelector('.telto-description');
+              const button = section.querySelector('.explore-button');
+              
+              // Animate out with reverse stagger (reverse order)
+              gsap.to([button, description, heading, logo], {
+                opacity: 0,
+                y: -20,
+                duration: 0.4,
+                stagger: 0.15,
+                ease: "power2.in",
+                onComplete: () => {
+                  section.style.opacity = '0';
+                  section.style.visibility = 'hidden';
+                }
+              });
+            } else if (section.classList.contains('demo-section')) {
+              // Animate individual elements out with reverse stagger for Demo section
+              const logo = section.querySelector('.demo-logo');
+              const heading = section.querySelector('.demo-heading');
+              const description = section.querySelector('.demo-description');
+              const button = section.querySelector('.explore-button');
+              
+              // Animate out with reverse stagger (reverse order)
+              gsap.to([button, description, heading, logo], {
+                opacity: 0,
+                y: -20,
+                duration: 0.4,
+                stagger: 0.15,
+                ease: "power2.in",
+                onComplete: () => {
+        section.style.opacity = '0';
+        section.style.visibility = 'hidden';
+                }
+              });
+            } else if (section.classList.contains('demo2-section')) {
+              // Animate individual elements out with reverse stagger for Demo 2 section
+              const logo = section.querySelector('.demo2-logo');
+              const heading = section.querySelector('.demo2-heading');
+              const description = section.querySelector('.demo2-description');
+              const button = section.querySelector('.explore-button');
+              
+              // Animate out with reverse stagger (reverse order)
+              gsap.to([button, description, heading, logo], {
+                opacity: 0,
+                y: -20,
+                duration: 0.4,
+                stagger: 0.15,
+                ease: "power2.in",
+                onComplete: () => {
+                  section.style.opacity = '0';
+                  section.style.visibility = 'hidden';
+                }
+              });
+            } else if (section.classList.contains('demo3-section')) {
+              // Animate individual elements out with reverse stagger for Demo 3 section
+              const logo = section.querySelector('.demo3-logo');
+              const heading = section.querySelector('.demo3-heading');
+              const description = section.querySelector('.demo3-description');
+              const button = section.querySelector('.explore-button');
+              
+              // Animate out with reverse stagger (reverse order)
+              gsap.to([button, description, heading, logo], {
+                opacity: 0,
+                y: -20,
+                duration: 0.4,
+                stagger: 0.15,
+                ease: "power2.in",
+                onComplete: () => {
+                  section.style.opacity = '0';
+                  section.style.visibility = 'hidden';
+                }
+              });
+            } else if (section.classList.contains('demo4-section')) {
+              // Animate individual elements out with reverse stagger for Demo 4 section
+              const logo = section.querySelector('.demo4-logo');
+              const heading = section.querySelector('.demo4-heading');
+              const description = section.querySelector('.demo4-description');
+              const button = section.querySelector('.explore-button');
+              
+              // Animate out with reverse stagger (reverse order)
+              gsap.to([button, description, heading, logo], {
+                opacity: 0,
+                y: -20,
+                duration: 0.4,
+                stagger: 0.15,
+                ease: "power2.in",
+                onComplete: () => {
+                  section.style.opacity = '0';
+                  section.style.visibility = 'hidden';
+                }
+              });
+        } else {
               // Scale to 0 + blur out effect for other content sections
               gsap.to(section, { 
                 scale: 0, 
@@ -517,13 +851,13 @@ document.addEventListener("DOMContentLoaded", () => {
                   section.style.visibility = 'hidden';
                   section.style.transform = 'scale(0)';
                   section.style.filter = 'blur(15px)';
-                }
-              });
-            }
+        }
+      });
+    }
           }
         } else if (section.classList.contains('content-hidden')) {
           // Section is already hidden, ensure it stays in the correct state
-          if (section.classList.contains('agile-office-overlay')) {
+          if (section.classList.contains('agile-office-overlay') || section.classList.contains('ixer-overlay') || section.classList.contains('edgerp-overlay') || section.classList.contains('ixer2-overlay') || section.classList.contains('invoicedge-overlay') || section.classList.contains('telto-overlay') || section.classList.contains('demo-overlay') || section.classList.contains('demo2-overlay') || section.classList.contains('demo3-overlay') || section.classList.contains('demo4-overlay')) {
             section.style.opacity = '0';
             section.style.visibility = 'hidden';
             section.style.transform = 'none';
@@ -548,7 +882,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ease: SteppedEase.config(1)
     });
   }
-
+  
   updateProgress(0, totalFrames);
   
   const batchSize = 50;
