@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const context = canvas.getContext("2d");
   
   if (!canvas) {
+    console.error('Canvas element not found!');
     return;
   }
 
@@ -19,9 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // CONFIGURATION
   const totalFrames = 1075;
-  const maxCacheSize = 300; // Much larger cache to prevent black screens
-  const preloadBuffer = 50; // Larger buffer for smoother scrolling
-  const initialLoadFrames = 150; // Load even more frames initially
+  const maxCacheSize = 1075;
+  const preloadBuffer = 30;
   let currentFrame = 1;
   
   let lastScrollProgress = 0;
@@ -29,90 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const frameCache = new Map();
   let lastRenderedFrame = null;
   let framesLoaded = 0;
-  
-  // Scroll direction and velocity tracking for intelligent prefetching
-  let scrollDirection = 1; // 1 for down, -1 for up
-  let scrollVelocity = 0;
-  let lastScrollTime = performance.now();
-  let lastScrollPosition = 0;
-  
-  // Frame change throttling to reduce blinking
-  let frameChangeThrottle = 0;
-  const FRAME_CHANGE_THROTTLE_MS = 16; // ~60fps max
-  
-  // Smart caching with LRU (Least Recently Used) functionality
-  class SmartFrameCache {
-    constructor(maxSize) {
-      this.cache = new Map();
-      this.maxSize = maxSize;
-      this.accessOrder = new Map();
-      this.accessCounter = 0;
-    }
-    
-    set(key, value) {
-      // If cache is full, remove least recently used item
-      if (this.cache.size >= this.maxSize && !this.cache.has(key)) {
-        this.evictLRU();
-      }
-      
-      this.cache.set(key, value);
-      this.accessOrder.set(key, ++this.accessCounter);
-    }
-    
-    get(key) {
-      if (this.cache.has(key)) {
-        this.accessOrder.set(key, ++this.accessCounter);
-        return this.cache.get(key);
-      }
-      return null;
-    }
-    
-    has(key) {
-      return this.cache.has(key);
-    }
-    
-    evictLRU() {
-      let oldestKey = null;
-      let oldestAccess = Infinity;
-      
-      for (const [key, accessTime] of this.accessOrder) {
-        if (accessTime < oldestAccess) {
-          oldestAccess = accessTime;
-          oldestKey = key;
-        }
-      }
-      
-      if (oldestKey !== null) {
-        // Clean up blob URL to prevent memory leaks
-        const img = this.cache.get(oldestKey);
-        if (img && img.src && img.src.startsWith('blob:')) {
-          URL.revokeObjectURL(img.src);
-        }
-        
-        this.cache.delete(oldestKey);
-        this.accessOrder.delete(oldestKey);
-      }
-    }
-    
-    clear() {
-      // Clean up all blob URLs
-      for (const [key, img] of this.cache) {
-        if (img && img.src && img.src.startsWith('blob:')) {
-          URL.revokeObjectURL(img.src);
-        }
-      }
-      this.cache.clear();
-      this.accessOrder.clear();
-    }
-    
-    size() {
-      return this.cache.size;
-    }
-  }
-  
-  // Initialize smart cache
-  const smartCache = new SmartFrameCache(maxCacheSize);
-  
   
   const framePaths = Array.from({ length: totalFrames }, (_, i) =>
     `assets/frames/frame-${String(i + 1).padStart(4, "0")}.webp`
@@ -331,28 +247,13 @@ document.addEventListener("DOMContentLoaded", () => {
           const scrollProgress = self.progress;
           updateScrollProgress(scrollProgress);
           
-          // Track scroll direction and velocity for intelligent prefetching
-          const currentTime = performance.now();
-          const currentScrollPosition = self.progress;
-          const timeDelta = currentTime - lastScrollTime;
-          
-          if (timeDelta > 0) {
-            scrollVelocity = Math.abs(currentScrollPosition - lastScrollPosition) / timeDelta;
-            scrollDirection = currentScrollPosition > lastScrollPosition ? 1 : -1;
-          }
-          
-          lastScrollTime = currentTime;
-          lastScrollPosition = currentScrollPosition;
-          
           // Calculate frame based on scroll progress (0 to 1)
           let frameIndex = Math.round(scrollProgress * (totalFrames - 1)) + 1;
           frameIndex = Math.min(totalFrames, Math.max(1, frameIndex));
           
-          // Only update if frame actually changed and throttle is satisfied
-          const now = performance.now();
-          if (frameIndex !== currentFrame && (now - frameChangeThrottle) >= FRAME_CHANGE_THROTTLE_MS) {
+          // Only update if frame actually changed
+          if (frameIndex !== currentFrame) {
             currentFrame = frameIndex;
-            frameChangeThrottle = now;
             renderFrame(currentFrame);
             updateContentVisibility(currentFrame);
           }
@@ -388,53 +289,28 @@ document.addEventListener("DOMContentLoaded", () => {
         img.src = URL.createObjectURL(blob);
         await new Promise((res) => (img.onload = res));
         const index = framePaths.indexOf(framePath) + 1;
-        
-        // Use smart cache instead of regular Map
-        smartCache.set(index, img);
+        frameCache.set(index, img);
         
         framesLoaded++;
         updateProgress(framesLoaded, totalFrames);
         
-        // Show content after initial frames are loaded (not all frames)
-        if (framesLoaded === initialLoadFrames) {
+        if (framesLoaded === totalFrames) {
           hidePreloader();
         }
       }
     } else if (e.data.type === "error") {
-      // Silent error handling - no console output
+      console.error("Frame loading error:", e.data.payload.error);
     }
   });
   
   function preloadFrames(index) {
-    // Calculate intelligent prefetch range based on scroll direction and velocity
-    let prefetchRange = preloadBuffer;
-    
-    // Increase prefetch range based on scroll velocity
-    if (scrollVelocity > 0.5) {
-      prefetchRange = Math.min(preloadBuffer * 3, 100); // Much more aggressive
-    } else if (scrollVelocity > 0.2) {
-      prefetchRange = Math.min(preloadBuffer * 2, 75);
-    } else {
-      prefetchRange = Math.min(preloadBuffer * 1.5, 60); // Even slow scrolling gets more frames
-    }
-    
-    // Adjust range based on scroll direction - always prefetch in both directions
-    let start, end;
-    if (scrollDirection > 0) {
-      // Scrolling down - prefetch more frames ahead, but also some behind
-      start = Math.max(1, index - Math.floor(prefetchRange * 0.3));
-      end = Math.min(totalFrames, index + prefetchRange);
-    } else {
-      // Scrolling up - prefetch more frames behind, but also some ahead
-      start = Math.max(1, index - prefetchRange);
-      end = Math.min(totalFrames, index + Math.floor(prefetchRange * 0.3));
-    }
-    
+    const start = Math.max(1, index - preloadBuffer);
+    const end = Math.min(totalFrames, index + preloadBuffer);
     const priorityFrames = [];
     const regularFrames = [];
     
     for (let i = start; i <= end; i++) {
-      if (!smartCache.has(i)) {
+      if (!frameCache.has(i)) {
         if (i === index) {
           priorityFrames.push(framePaths[i - 1]);
         } else {
@@ -443,28 +319,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
     
-    // Load priority frames first (current frame)
     if (priorityFrames.length > 0) {
       worker.postMessage({ type: "loadFrames", payload: { frames: priorityFrames } });
     }
-    
-    // Load regular frames with a small delay to prioritize current frame
     if (regularFrames.length > 0) {
-      setTimeout(() => {
       worker.postMessage({ type: "loadFrames", payload: { frames: regularFrames } });
-      }, 50);
     }
   }
   
   function renderFrame(index) {
-    const img = smartCache.get(index);
+    const img = frameCache.get(index);
     
     if (!img) {
-      // Frame not in cache, try to find closest available frame
       let closestFrame = null;
       let minDistance = Infinity;
       for (let i = 1; i <= totalFrames; i++) {
-        if (smartCache.has(i)) {
+        if (frameCache.has(i)) {
           const distance = Math.abs(i - index);
           if (distance < minDistance) {
             minDistance = distance;
@@ -472,18 +342,10 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
       }
-      
-      // Show closest frame if it's reasonably close (within 15 frames)
-      if (closestFrame && closestFrame !== lastRenderedFrame && minDistance <= 15) {
-        drawFrameToCanvas(smartCache.get(closestFrame));
+      if (closestFrame && closestFrame !== lastRenderedFrame) {
+        drawFrameToCanvas(frameCache.get(closestFrame));
         lastRenderedFrame = closestFrame;
-      } else if (minDistance > 15) {
-        // Only show transparent if no reasonably close frame is available
-        context.clearRect(0, 0, canvas.width, canvas.height);
       }
-      
-      // Load the requested frame
-      preloadFrames(index);
       return;
     }
     
@@ -1023,25 +885,28 @@ document.addEventListener("DOMContentLoaded", () => {
   
   updateProgress(0, totalFrames);
   
-  // Load initial frames for faster startup
-  const initialBatch = framePaths.slice(0, initialLoadFrames);
-  worker.postMessage({ type: "loadFrames", payload: { frames: initialBatch } });
-  
-  // Start background loading of more frames after initial load
-  setTimeout(() => {
-    const backgroundBatch = framePaths.slice(initialLoadFrames, initialLoadFrames + 100);
-    worker.postMessage({ type: "loadFrames", payload: { frames: backgroundBatch } });
-  }, 2000);
+  const batchSize = 50;
+  for (let i = 0; i < totalFrames; i += batchSize) {
+    const batch = framePaths.slice(i, i + batchSize);
+    setTimeout(() => {
+      worker.postMessage({ type: "loadFrames", payload: { frames: batch } });
+    }, i * 10);
+  }
   
   function cleanup() {
-    smartCache.clear();
+    frameCache.forEach(img => {
+      if (img.src) {
+        URL.revokeObjectURL(img.src);
+      }
+    });
     worker.terminate();
+    frameCache.clear();
   }
   
   window.addEventListener('beforeunload', cleanup);
   
   worker.addEventListener('error', (error) => {
-    // Silent error handling - no console output
+    console.error('Web Worker error:', error);
   });
 
 
