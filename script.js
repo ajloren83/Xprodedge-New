@@ -438,7 +438,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const scrollSpacer = document.querySelector('.scroll-spacer');
     if (scrollSpacer) {
       const frameHeight = Math.max(window.innerHeight, 800);
-      const totalScrollHeight = totalFrames * (frameHeight / 30);
+      const totalScrollHeight = totalFrames * (frameHeight / 24);
       scrollSpacer.style.height = `${totalScrollHeight}px`;
     }
     
