@@ -170,8 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Use Lenis smooth scroll if available, otherwise use native smooth scroll
     if (window.lenis && typeof window.lenis.scrollTo === 'function') {
       window.lenis.scrollTo(maxScrollY, { 
-        duration: 2.0, 
-        easing: (t) => t * (2 - t) // ease-out
+        duration: 1.0
       });
     } else {
       window.scrollTo({ 
