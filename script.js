@@ -472,6 +472,13 @@ document.addEventListener("DOMContentLoaded", () => {
       menuPanel.classList.toggle('open', open);
       if (menuOverlay) menuOverlay.classList.toggle('open', open);
 
+      // Show/hide custom cursor based on menu state
+      if (customCursor) {
+        customCursor.style.display = open ? 'none' : 'block';
+      }
+      // Show normal cursor when menu is open
+      document.body.classList.toggle('menu-open', open);
+
       // Accessibility + icon
       menuToggleBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
       menuPanel.setAttribute('aria-hidden', open ? 'false' : 'true');

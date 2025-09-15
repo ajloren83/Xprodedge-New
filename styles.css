@@ -1518,8 +1518,13 @@ textarea:hover ~ .custom-cursor,
 }
 
 /* Hide default cursor only when custom cursor is visible and not near interactive elements */
-body:not(.loading):not(.near-interactive) {
+body:not(.loading):not(.near-interactive):not(.menu-open) {
   cursor: none;
+}
+
+/* Show normal cursor when menu is open */
+body.menu-open {
+  cursor: auto;
 }
 
 /* Show default cursor on interactive elements */
