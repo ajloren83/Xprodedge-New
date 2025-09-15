@@ -54,6 +54,250 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Custom Cursor functionality
+  const customCursor = document.getElementById('customCursor');
+  const cursorUp = customCursor.querySelector('.cursor-caret-up');
+  const cursorDown = customCursor.querySelector('.cursor-caret-down');
+  
+  // Hide custom cursor during loading and add loading class to body
+  if (customCursor) {
+    customCursor.style.display = 'none';
+  }
+  document.body.classList.add('loading');
+  
+  let lastScrollY = 0;
+  let scrollDirection = 'down';
+  let scrollTimeout = null;
+  let isScrolling = false;
+  
+  // Track mouse movement
+  document.addEventListener('mousemove', (e) => {
+    if (customCursor) {
+      customCursor.style.left = e.clientX + 'px';
+      customCursor.style.top = e.clientY + 'px';
+      
+      // Check proximity to interactive elements
+      checkProximityToInteractiveElements(e.clientX, e.clientY);
+    }
+  });
+  
+  // Throttling for animation during continuous scrolling
+  let lastAnimationTime = 0;
+  const animationThrottle = 500; // Minimum 500ms between animations
+  
+  // Track scroll direction
+  function updateScrollDirection() {
+    const currentScrollY = window.scrollY || window.pageYOffset;
+    const now = Date.now();
+    
+    if (currentScrollY > lastScrollY) {
+      scrollDirection = 'down';
+      cursorDown.classList.add('active');
+      cursorUp.classList.remove('active');
+      // Start animation with throttling during scrolling
+      if (now - lastAnimationTime > animationThrottle) {
+        startScrollGuidanceAnimation();
+        lastAnimationTime = now;
+      }
+    } else if (currentScrollY < lastScrollY) {
+      scrollDirection = 'up';
+      cursorUp.classList.add('active');
+      cursorDown.classList.remove('active');
+      // Start animation with throttling during scrolling
+      if (now - lastAnimationTime > animationThrottle) {
+        startScrollGuidanceAnimation();
+        lastAnimationTime = now;
+      }
+    }
+    
+    lastScrollY = currentScrollY;
+    isScrolling = true;
+    
+    // Clear existing timeout
+    if (scrollTimeout) {
+      clearTimeout(scrollTimeout);
+    }
+    
+    // Set timeout to detect when scrolling stops
+    scrollTimeout = setTimeout(() => {
+      isScrolling = false;
+      startScrollGuidanceAnimation();
+    }, 150); // 150ms delay after scroll stops
+  }
+  
+  // Animation management
+  let animationTimeout = null;
+  let currentAnimatedTriangle = null;
+  
+  // Start scroll guidance animation
+  function startScrollGuidanceAnimation() {
+    const targetTriangle = scrollDirection === 'down' ? cursorDown : cursorUp;
+    
+    // If the same triangle is already animating, don't interrupt
+    if (currentAnimatedTriangle === targetTriangle) {
+      return;
+    }
+    
+    // Clear any existing animation timeout
+    if (animationTimeout) {
+      clearTimeout(animationTimeout);
+    }
+    
+    // Remove animation from the other triangle
+    if (currentAnimatedTriangle && currentAnimatedTriangle !== targetTriangle) {
+      currentAnimatedTriangle.classList.remove('scroll-guidance');
+    }
+    
+    // Add animation to the target triangle
+    targetTriangle.classList.add('scroll-guidance');
+    currentAnimatedTriangle = targetTriangle;
+    
+    // Set timeout to remove animation after it completes
+    animationTimeout = setTimeout(() => {
+      if (targetTriangle) {
+        targetTriangle.classList.remove('scroll-guidance');
+      }
+      if (currentAnimatedTriangle === targetTriangle) {
+        currentAnimatedTriangle = null;
+      }
+    }, 2000); // Animation duration
+  }
+  
+  // Proximity-based cursor change
+  let proximityThreshold = 80; // pixels
+  let isNearInteractiveElement = false;
+  
+  function checkProximityToInteractiveElements(mouseX, mouseY) {
+    const interactiveElements = document.querySelectorAll('a, button, input, textarea, [role="button"]');
+    let nearElement = false;
+    let detectedElement = null;
+    
+    interactiveElements.forEach(element => {
+      // Skip hidden elements (display: none, visibility: hidden, or opacity: 0)
+      const computedStyle = window.getComputedStyle(element);
+      if (computedStyle.display === 'none' || 
+          computedStyle.visibility === 'hidden' || 
+          computedStyle.opacity === '0' ||
+          element.offsetParent === null) {
+        return;
+      }
+      
+      // Skip elements with content-hidden class
+      if (element.classList.contains('content-hidden')) {
+        return;
+      }
+      
+      // Skip menu footer links when menu is closed
+      if (element.classList.contains('menu-foot-link')) {
+        const menuPanel = document.getElementById('menuPanel');
+        if (menuPanel && !menuPanel.classList.contains('open')) {
+          return;
+        }
+      }
+      
+      // Skip elements that are not visible (outside viewport or clipped)
+      const rect = element.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) {
+        return;
+      }
+      
+      // Skip elements that are positioned outside the viewport
+      if (rect.right < 0 || rect.left > window.innerWidth || 
+          rect.bottom < 0 || rect.top > window.innerHeight) {
+        return;
+      }
+      
+      const elementCenterX = rect.left + rect.width / 2;
+      const elementCenterY = rect.top + rect.height / 2;
+      
+      // Calculate distance from mouse to element center
+      const distance = Math.sqrt(
+        Math.pow(mouseX - elementCenterX, 2) + Math.pow(mouseY - elementCenterY, 2)
+      );
+      
+      // Check if mouse is within proximity threshold
+      if (distance <= proximityThreshold) {
+        nearElement = true;
+        detectedElement = element;
+        // Debug log to identify problematic elements
+        console.log('Detected element:', element, 'Distance:', distance, 'Position:', rect);
+      }
+    });
+    
+    // Update cursor visibility based on proximity
+    if (nearElement && !isNearInteractiveElement) {
+      // Mouse is approaching an interactive element
+      isNearInteractiveElement = true;
+      if (customCursor) {
+        customCursor.classList.add('hide');
+      }
+      // Show normal cursor immediately
+      document.body.classList.add('near-interactive');
+    } else if (!nearElement && isNearInteractiveElement) {
+      // Mouse is moving away from interactive elements
+      isNearInteractiveElement = false;
+      if (customCursor) {
+        customCursor.classList.remove('hide');
+      }
+      // Hide normal cursor, show custom cursor
+      document.body.classList.remove('near-interactive');
+    }
+  }
+  
+  // Hide cursor on interactive elements (fallback for direct hover)
+  function checkInteractiveElements() {
+    const interactiveElements = document.querySelectorAll('a, button, input, textarea, [role="button"]');
+    
+    interactiveElements.forEach(element => {
+      // Only attach listeners to visible elements
+      const computedStyle = window.getComputedStyle(element);
+      if (computedStyle.display === 'none' || 
+          computedStyle.visibility === 'hidden' || 
+          computedStyle.opacity === '0' ||
+          element.offsetParent === null) {
+        return;
+      }
+      
+      // Skip menu footer links when menu is closed
+      if (element.classList.contains('menu-foot-link')) {
+        const menuPanel = document.getElementById('menuPanel');
+        if (menuPanel && !menuPanel.classList.contains('open')) {
+          return;
+        }
+      }
+      
+      element.addEventListener('mouseenter', () => {
+        if (customCursor) {
+          customCursor.classList.add('hide');
+        }
+        // Show normal cursor immediately
+        document.body.classList.add('near-interactive');
+      });
+      
+      element.addEventListener('mouseleave', () => {
+        if (customCursor) {
+          customCursor.classList.remove('hide');
+        }
+        // Hide normal cursor, show custom cursor
+        document.body.classList.remove('near-interactive');
+      });
+    });
+  }
+  
+  // Initialize cursor functionality
+  if (customCursor) {
+    updateScrollDirection();
+    checkInteractiveElements();
+    
+    // Update scroll direction on scroll
+    window.addEventListener('scroll', updateScrollDirection);
+    
+    // Start initial scroll guidance after cursor is shown
+    setTimeout(() => {
+      startScrollGuidanceAnimation();
+    }, 3000); // 3 seconds after page load (accounting for preloader + cursor show delay)
+  }
+
   // Noise setup
   const noiseBG = document.getElementById('noiseBG');
   if (noiseBG) {
@@ -154,6 +398,14 @@ document.addEventListener("DOMContentLoaded", () => {
       initializeMainSystem();
       // Auto-scroll 25 frames after loading
       autoScrollFrames(25);
+      
+      // Show custom cursor after preloader is hidden
+      if (customCursor) {
+        customCursor.style.display = 'block';
+      }
+      
+      // Remove loading class to enable custom cursor
+      document.body.classList.remove('loading');
     }, 500);
   }
   
@@ -951,6 +1203,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     worker.terminate();
     frameCache.clear();
+    
+    // Clear animation timeouts
+    if (animationTimeout) {
+      clearTimeout(animationTimeout);
+    }
+    if (scrollTimeout) {
+      clearTimeout(scrollTimeout);
+    }
     
     // Remove debug display
     if (debugDisplay && debugDisplay.parentNode) {

@@ -1394,6 +1394,139 @@ html, body {
   pointer-events: none;
 }
 
+/* Custom Cursor */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 60px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s ease;
+}
+
+.cursor-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.cursor-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.cursor-caret {
+  position: absolute;
+  width: 0;
+  height: 0;
+  transition: border-color 0.3s ease;
+}
+
+.cursor-caret-up {
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 8px solid #666666;
+}
+
+.cursor-caret-down {
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 8px solid #666666;
+}
+
+.cursor-caret-up.active {
+  border-bottom-color: #ffffff;
+}
+
+.cursor-caret-down.active {
+  border-top-color: #ffffff;
+}
+
+/* Scroll guidance animation */
+.cursor-caret-up.scroll-guidance {
+  animation: scrollGuidanceUp 2s ease-in-out;
+}
+
+.cursor-caret-down.scroll-guidance {
+  animation: scrollGuidanceDown 2s ease-in-out;
+}
+
+@keyframes scrollGuidanceUp {
+  0% {
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  25% {
+    transform: translateX(-50%) translateY(-6px) scale(1.1);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-3px) scale(1.05);
+  }
+  75% {
+    transform: translateX(-50%) translateY(-4px) scale(1.08);
+  }
+  100% {
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+@keyframes scrollGuidanceDown {
+  0% {
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  25% {
+    transform: translateX(-50%) translateY(6px) scale(1.1);
+  }
+  50% {
+    transform: translateX(-50%) translateY(3px) scale(1.05);
+  }
+  75% {
+    transform: translateX(-50%) translateY(4px) scale(1.08);
+  }
+  100% {
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+/* Hide custom cursor on interactive elements */
+a:hover ~ .custom-cursor,
+button:hover ~ .custom-cursor,
+input:hover ~ .custom-cursor,
+textarea:hover ~ .custom-cursor,
+[role="button"]:hover ~ .custom-cursor,
+.custom-cursor.hide {
+  opacity: 0;
+}
+
+/* Hide default cursor only when custom cursor is visible and not near interactive elements */
+body:not(.loading):not(.near-interactive) {
+  cursor: none;
+}
+
+/* Show default cursor on interactive elements */
+a, button, input, textarea, [role="button"] {
+  cursor: pointer;
+}
+
 /* Header */
 .site-header {
   position: fixed;
@@ -1471,8 +1604,13 @@ html, body {
   transition: transform 0.35s cubic-bezier(.2,.8,.2,1), opacity 0.25s ease;
   opacity: 0.98;
   z-index: 1200;
+  pointer-events: none;
 }
-.menu-panel.open { transform: translateX(0) scale(1); opacity: 1; }
+.menu-panel.open { 
+  transform: translateX(0) scale(1); 
+  opacity: 1; 
+  pointer-events: auto;
+}
 
 .menu-content { display: flex; flex-direction: column; gap: 16px; padding: 96px 24px 24px; }
 .menu-item { 
@@ -1517,8 +1655,13 @@ html, body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  pointer-events: none;
 }
-.menu-panel.modal.open { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.menu-panel.modal.open { 
+  opacity: 1; 
+  transform: translate(-50%, -50%) scale(1); 
+  pointer-events: auto;
+}
 
 .menu-modal-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 16px 0 16px; }
 .menu-label { color: #888; font-weight: 600; }
