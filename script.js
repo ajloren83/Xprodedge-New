@@ -12,6 +12,48 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  // Create debug display for frame number
+  const debugDisplay = document.createElement('div');
+  debugDisplay.id = 'frameDebugDisplay';
+  debugDisplay.style.cssText = `
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 1000;
+    pointer-events: none;
+    user-select: none;
+    display: none;
+  `;
+  debugDisplay.textContent = 'Frame: 1';
+  document.body.appendChild(debugDisplay);
+
+  // Debug display toggle functionality
+  let debugVisible = false;
+  
+  function toggleDebugDisplay() {
+    debugVisible = !debugVisible;
+    debugDisplay.style.display = debugVisible ? 'block' : 'none';
+  }
+
+  // Add keyboard shortcut to toggle debug display (press 'D' key)
+  document.addEventListener('keydown', (e) => {
+    if (e.key.toLowerCase() === 'd' && !e.ctrlKey && !e.altKey && !e.metaKey) {
+      // Only toggle if not typing in an input field
+      if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        toggleDebugDisplay();
+      }
+    }
+  });
+
   // Noise setup
   const noiseBG = document.getElementById('noiseBG');
   if (noiseBG) {
@@ -19,8 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   
   // CONFIGURATION
-  const totalFrames = 1075;
-  const maxCacheSize = 1075;
+  const totalFrames = 841;
+  const maxCacheSize = 841;
   const preloadBuffer = 30;
   let currentFrame = 1;
   
@@ -330,6 +372,11 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderFrame(index) {
     const img = frameCache.get(index);
     
+    // Update debug display only if visible
+    if (debugDisplay && debugVisible) {
+      debugDisplay.textContent = `Frame: ${index}`;
+    }
+    
     if (!img) {
       let closestFrame = null;
       let minDistance = Infinity;
@@ -345,6 +392,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (closestFrame && closestFrame !== lastRenderedFrame) {
         drawFrameToCanvas(frameCache.get(closestFrame));
         lastRenderedFrame = closestFrame;
+        // Update debug display for closest frame
+        if (debugDisplay && debugVisible) {
+          debugDisplay.textContent = `Frame: ${closestFrame} (closest to ${index})`;
+        }
       }
       return;
     }
@@ -901,6 +952,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     worker.terminate();
     frameCache.clear();
+    
+    // Remove debug display
+    if (debugDisplay && debugDisplay.parentNode) {
+      debugDisplay.parentNode.removeChild(debugDisplay);
+    }
   }
   
   window.addEventListener('beforeunload', cleanup);
