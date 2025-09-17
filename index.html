@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Xprodedge | Products on the edge</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Michroma:wght@400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Michroma:wght@400&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
     <!-- Preloader Overlay -->
     <div id="preloader" class="preloader-overlay">
@@ -33,7 +37,9 @@
                     </a>
                 </div>
                 <div class="header-center">
-                    <div class="scroll-progress"><div class="scroll-progress-fill" id="scrollProgressFill"></div></div>
+                    <div class="scroll-progress">
+                        <div class="scroll-progress-fill" id="scrollProgressFill"></div>
+                    </div>
                 </div>
                 <div class="header-right">
                     <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
@@ -68,10 +74,10 @@
 
         <!-- Canvas for frame rendering -->
         <canvas id="scrollCanvas"></canvas>
-        
+
         <!-- Noise overlay for continuous animation -->
         <div class="noiseBG" id="noiseBG"></div>
-        
+
         <!-- Hero Section -->
         <section class="hero-section content-hidden" data-reveal-frame="25" data-reveal-frame-duration="50">
             <div class="hero-content">
@@ -87,15 +93,37 @@
         </section>
 
         <!-- Background Overlay for Agile Office -->
-        <div class="agile-office-overlay content-hidden" data-reveal-frame="121" data-reveal-frame-duration="60"></div>
+        <div class="agile-office-overlay content-hidden" data-reveal-frame="161" data-reveal-frame-duration="60"></div>
 
         <!-- Agile Office Section -->
-        <section class="agile-office-section content-hidden" data-reveal-frame="121" data-reveal-frame-duration="60">
+        <section class="agile-office-section content-hidden" data-reveal-frame="161" data-reveal-frame-duration="60">
             <div class="agile-office-content">
                 <img src="assets/agile-office.svg" alt="Agile Office Logo" class="agile-office-logo">
                 <h2 class="agile-office-heading">'Swift and Simple' workflow process automation</h2>
                 <p class="agile-office-description">
-                    Our agileoffice is a cloud web-based online SaaS application which makes your customized workflow process easier
+                    Our agileoffice is a cloud web-based online SaaS application which makes your customized workflow
+                    process easier
+                </p>
+                <button class="explore-button">
+                    <span class="button-text">Explore</span>
+                    <img src="assets/arrow.svg" alt="Arrow" class="button-arrow">
+                </button>
+            </div>
+        </section>
+
+
+
+        <!-- Background Overlay for Edgerp -->
+        <div class="edgerp-overlay content-hidden" data-reveal-frame="241" data-reveal-frame-duration="60"></div>
+
+        <!-- Edgerp Section -->
+        <section class="edgerp-section content-hidden" data-reveal-frame="241" data-reveal-frame-duration="60">
+            <div class="edgerp-content">
+                <img src="assets/edgerp.svg" alt="Edgerp Logo" class="edgerp-logo">
+                <h2 class="edgerp-heading">Digital transformation is a business discipline</h2>
+                <p class="edgerp-description">
+                    Our edgerp software simplifies operations, enhances efficiency, and offers end-to-end solutions that
+                    help your business achieve operational excellence and a competitive edge
                 </p>
                 <button class="explore-button">
                     <span class="button-text">Explore</span>
@@ -105,51 +133,16 @@
         </section>
 
         <!-- Background Overlay for Ixer -->
-        <div class="ixer-overlay content-hidden" data-reveal-frame="191" data-reveal-frame-duration="60"></div>
+        <div class="ixer-overlay content-hidden" data-reveal-frame="351" data-reveal-frame-duration="60"></div>
 
         <!-- Ixer Section -->
-        <section class="ixer-section content-hidden" data-reveal-frame="191" data-reveal-frame-duration="60">
+        <section class="ixer-section content-hidden" data-reveal-frame="351" data-reveal-frame-duration="60">
             <div class="ixer-content">
                 <img src="assets/ixer.svg" alt="Ixer Logo" class="ixer-logo">
                 <h2 class="ixer-heading">Augmenting mind</h2>
                 <p class="ixer-description">
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam
-                </p>
-                <button class="explore-button">
-                    <span class="button-text">Explore</span>
-                    <img src="assets/arrow.svg" alt="Arrow" class="button-arrow">
-                </button>
-            </div>
-        </section>
-
-        <!-- Background Overlay for Edgerp -->
-        <div class="edgerp-overlay content-hidden" data-reveal-frame="281" data-reveal-frame-duration="60"></div>
-
-        <!-- Edgerp Section -->
-        <section class="edgerp-section content-hidden" data-reveal-frame="281" data-reveal-frame-duration="60">
-            <div class="edgerp-content">
-                <img src="assets/edgerp.svg" alt="Edgerp Logo" class="edgerp-logo">
-                <h2 class="edgerp-heading">Digital transformation is a business discipline</h2>
-                <p class="edgerp-description">
-                    Our edgerp software simplifies operations, enhances efficiency, and offers end-to-end solutions that help your business achieve operational excellence and a competitive edge
-                </p>
-                <button class="explore-button">
-                    <span class="button-text">Explore</span>
-                    <img src="assets/arrow.svg" alt="Arrow" class="button-arrow">
-                </button>
-            </div>
-        </section>
-
-        <!-- Background Overlay for Ixer 2 -->
-        <div class="ixer2-overlay content-hidden" data-reveal-frame="351" data-reveal-frame-duration="60"></div>
-
-        <!-- Ixer 2 Section -->
-        <section class="ixer2-section content-hidden" data-reveal-frame="351" data-reveal-frame-duration="60">
-            <div class="ixer2-content">
-                <img src="assets/ixer.svg" alt="Ixer Logo" class="ixer2-logo">
-                <h2 class="ixer2-heading">Augmenting mind</h2>
-                <p class="ixer2-description">
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+                    Lorem ipsum dolor sit amet consectetur adipiscing elit Sed do eiusmod tempor incididunt ut labore et
+                    dolore magna aliqua Ut enim ad minim veniam
                 </p>
                 <button class="explore-button">
                     <span class="button-text">Explore</span>
@@ -167,15 +160,16 @@
                 <img src="assets/invoicedge.svg" alt="Invoicedge Logo" class="invoicedge-logo">
                 <h2 class="invoicedge-heading">A SaaS based integrated e-invoice engine with PEPPOL network</h2>
                 <p class="invoicedge-description">
-                    Invoicedge simplifies global e-invoicing through our advanced RESTful API services, empowering SMEs, MSMEs, and ERP users to integrate seamlessly with any ERP platform
+                    Invoicedge simplifies global e-invoicing through our advanced RESTful API services, empowering SMEs,
+                    MSMEs, and ERP users to integrate seamlessly with any ERP platform
                 </p>
                 <button class="explore-button">
                     <span class="button-text">Explore</span>
                     <img src="assets/arrow.svg" alt="Arrow" class="button-arrow">
                 </button>
             </div>
-            </section>
-            
+        </section>
+
         <!-- Background Overlay for Telto -->
         <div class="telto-overlay content-hidden" data-reveal-frame="581" data-reveal-frame-duration="30"></div>
 
@@ -192,8 +186,8 @@
                     <img src="assets/arrow.svg" alt="Arrow" class="button-arrow">
                 </button>
             </div>
-            </section>
-            
+        </section>
+
         <!-- Background Overlay for Demo -->
         <div class="demo-overlay content-hidden" data-reveal-frame="631" data-reveal-frame-duration="30"></div>
 
@@ -203,15 +197,16 @@
                 <img src="assets/demo-logo.svg" alt="Demo Logo" class="demo-logo">
                 <h2 class="demo-heading">Lorem ipsum dolor sit</h2>
                 <p class="demo-description">
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+                    Lorem ipsum dolor sit amet consectetur adipiscing elit Sed do eiusmod tempor incididunt ut labore et
+                    dolore magna aliqua. Ut enim ad minim veniam
                 </p>
                 <button class="explore-button">
                     <span class="button-text">Explore</span>
                     <img src="assets/arrow.svg" alt="Arrow" class="button-arrow">
                 </button>
             </div>
-            </section>
-            
+        </section>
+
         <!-- Background Overlay for Demo 2 -->
         <div class="demo2-overlay content-hidden" data-reveal-frame="681" data-reveal-frame-duration="30"></div>
 
@@ -221,15 +216,16 @@
                 <img src="assets/demo-logo.svg" alt="Demo Logo" class="demo2-logo">
                 <h2 class="demo2-heading">Lorem ipsum dolor sit</h2>
                 <p class="demo2-description">
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+                    Lorem ipsum dolor sit amet consectetur adipiscing elit Sed do eiusmod tempor incididunt ut labore et
+                    dolore magna aliqua. Ut enim ad minim veniam
                 </p>
                 <button class="explore-button">
                     <span class="button-text">Explore</span>
                     <img src="assets/arrow.svg" alt="Arrow" class="button-arrow">
                 </button>
             </div>
-            </section>
-            
+        </section>
+
         <!-- Background Overlay for Demo 3 -->
         <div class="demo3-overlay content-hidden" data-reveal-frame="731" data-reveal-frame-duration="30"></div>
 
@@ -239,14 +235,15 @@
                 <img src="assets/demo-logo.svg" alt="Demo Logo" class="demo3-logo">
                 <h2 class="demo3-heading">Lorem ipsum dolor sit</h2>
                 <p class="demo3-description">
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+                    Lorem ipsum dolor sit amet consectetur adipiscing elit Sed do eiusmod tempor incididunt ut labore et
+                    dolore magna aliqua. Ut enim ad minim veniam
                 </p>
                 <button class="explore-button">
                     <span class="button-text">Explore</span>
                     <img src="assets/arrow.svg" alt="Arrow" class="button-arrow">
                 </button>
             </div>
-            </section>
+        </section>
 
         <!-- Background Overlay for Demo 4 -->
         <div class="demo4-overlay content-hidden" data-reveal-frame="781" data-reveal-frame-duration="30"></div>
@@ -257,16 +254,17 @@
                 <img src="assets/demo-logo.svg" alt="Demo Logo" class="demo4-logo">
                 <h2 class="demo4-heading">Lorem ipsum dolor sit</h2>
                 <p class="demo4-description">
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+                    Lorem ipsum dolor sit amet consectetur adipiscing elit Sed do eiusmod tempor incididunt ut labore et
+                    dolore magna aliqua. Ut enim ad minim veniam
                 </p>
                 <button class="explore-button">
                     <span class="button-text">Explore</span>
                     <img src="assets/arrow.svg" alt="Arrow" class="button-arrow">
                 </button>
-        </div>
+            </div>
         </section>
     </div>
-    
+
     <!-- Scroll spacer to ensure enough height for frame scrolling -->
     <div class="scroll-spacer"></div>
 
@@ -287,4 +285,5 @@
     <script src="frameWorker.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
