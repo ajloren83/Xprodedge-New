@@ -305,8 +305,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   
   // CONFIGURATION
-  const totalFrames = 841;
-  const maxCacheSize = 841;
+  const totalFrames = 811;
+  const maxCacheSize = 811;
   const preloadBuffer = 30;
   let currentFrame = 1;
   
